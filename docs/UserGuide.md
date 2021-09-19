@@ -183,10 +183,13 @@ _Details coming soon ..._
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-**Clear** | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List** | `list`
+**AddTask** | `todo DESCRIPTION [/mod MODULE]`<br>`deadline DESCRIPTION /by DATE TIME [/mod MODULE]`<br>`event DESCRIPTION /at DATE START_TIME END_TIME [/mod MODULE]` <br>e.g., `todo borrow a book /mod CS2103`<br>`deadline submit report /by 2021-08-09 14:00 /mod CS2103`<br>`event tutorial /at 2021-08-09 14:00 16:00`
+**ReadTask** | `readTask INDEX`<br>e.g., `readTask 3`
+**UpdateTask** | `updateTask INDEX CATEGORY CONTENT`<br>e.g., `update 3 description buy milk`
+**DeleteTask** | `deleteTask INDEX`<br>e.g., `deleteTask 3`
+**AddModule** | `addMod NAME [/link LINK_NAME LINK]​`<br>e.g.,`addMod CS2103 /link tutorial https://...`
+**ReadModule** | `readMod NAME`<br>e.g., `readMod CS2103`
+**UpdateModule** | `updateMod NAME CATEGORY CONTENT`<br>e.g., `updateMod CS2103 link https://...`
+**DeleteModule** | `deleteMod NAME`<br>e.g., `deleteMod CS2103`
 **Help** | `help`
+**Exit** | `exit`
