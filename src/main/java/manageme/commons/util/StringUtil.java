@@ -1,5 +1,6 @@
 package manageme.commons.util;
 
+import static java.util.Locale.ENGLISH;
 import static java.util.Objects.requireNonNull;
 
 import java.io.PrintWriter;
@@ -30,11 +31,12 @@ public class StringUtil {
         AppUtil.checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
         AppUtil.checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
 
-        String preppedSentence = sentence;
+        String preppedSentence = sentence.toLowerCase(ENGLISH);
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
+        String lowerCaseWord = preppedWord.toLowerCase(ENGLISH);
 
         return Arrays.stream(wordsInPreppedSentence)
-                .anyMatch(preppedWord::equalsIgnoreCase);
+                .anyMatch(str -> str.contains(lowerCaseWord));
     }
 
     /**

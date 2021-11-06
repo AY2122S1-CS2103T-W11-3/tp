@@ -41,7 +41,7 @@ public class OpenLinkCommand extends Command {
         try {
             model.openLink(linkToOpen);
         } catch (Exception e) {
-            String failureResult = MESSAGE_OPEN_LINK_FAILURE + e.getMessage();
+            String failureResult = String.format(MESSAGE_OPEN_LINK_FAILURE, linkToOpen) + "\n" + e.getMessage();
             return new CommandResult(failureResult);
         }
         return new CommandResult(String.format(MESSAGE_OPEN_LINK_SUCCESS, linkToOpen));
