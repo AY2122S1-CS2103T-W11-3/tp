@@ -1,8 +1,8 @@
 package manageme.testutil;
 
 import manageme.logic.commands.module.EditModuleCommand;
-import manageme.model.module.Module;
 import manageme.model.Name;
+import manageme.model.module.Module;
 
 
 public class EditModuleDescriptorBuilder {

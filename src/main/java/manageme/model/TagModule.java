@@ -18,7 +18,7 @@ public class TagModule {
     public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
     public final String value;
-    public final Optional<String> Name;
+    public final Optional<String> name;
 
     /**
      * Constructs a {@code TagModule}.
@@ -29,7 +29,7 @@ public class TagModule {
         requireNonNull(linkModule);
         checkArgument(isValidModule(linkModule), MESSAGE_CONSTRAINTS);
         this.value = linkModule;
-        this.Name = Optional.of(linkModule);
+        this.name = Optional.of(linkModule);
     }
 
     /**
@@ -37,7 +37,7 @@ public class TagModule {
      */
     public TagModule() {
         this.value = "";
-        this.Name = Optional.empty();
+        this.name = Optional.empty();
     }
 
     /**

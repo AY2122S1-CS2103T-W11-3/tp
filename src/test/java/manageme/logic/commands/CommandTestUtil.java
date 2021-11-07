@@ -13,12 +13,10 @@ import manageme.commons.core.index.Index;
 import manageme.logic.commands.exceptions.CommandException;
 import manageme.model.ManageMe;
 import manageme.model.Model;
-import manageme.model.link.Link;
 import manageme.model.NameContainsKeywordsPredicate;
-import manageme.model.module.NameContainsKeywordsPredicate;
+import manageme.model.link.Link;
 import manageme.model.module.Module;
 import manageme.model.task.Task;
-import manageme.model.NameContainsKeywordsPredicate;
 
 /**
  * Contains helper methods for testing commands.

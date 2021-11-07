@@ -14,9 +14,9 @@ import manageme.logic.commands.Command;
 import manageme.logic.commands.CommandResult;
 import manageme.logic.commands.exceptions.CommandException;
 import manageme.model.Model;
+import manageme.model.Name;
 import manageme.model.TagModule;
 import manageme.model.module.Module;
-import manageme.model.Name;
 
 /**
  * Edits the details of an existing module in the app.
@@ -106,7 +106,7 @@ public class EditModuleCommand extends Command {
      * corresponding field value of the module.
      */
     public static class EditModuleDescriptor {
-        private Name Name;
+        private Name name;
 
         public EditModuleDescriptor() {}
 
@@ -115,22 +115,22 @@ public class EditModuleCommand extends Command {
          * A defensive copy of {@code tags} is used internally.
          */
         public EditModuleDescriptor(EditModuleDescriptor toCopy) {
-            setName(toCopy.Name);
+            setName(toCopy.name);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(Name);
+            return CollectionUtil.isAnyNonNull(name);
         }
 
-        public void setName(Name Name) {
-            this.Name = Name;
+        public void setName(Name name) {
+            this.name = name;
         }
 
         public Optional<Name> getName() {
-            return Optional.ofNullable(Name);
+            return Optional.ofNullable(name);
         }
 
         @Override

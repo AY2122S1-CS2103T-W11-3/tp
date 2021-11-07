@@ -14,8 +14,8 @@ public class Module extends ManageMeObject {
     /**
      * Link optional
      */
-    public Module(Name Name) {
-        super(Name);
+    public Module(Name name) {
+        super(name);
     }
 
     /**

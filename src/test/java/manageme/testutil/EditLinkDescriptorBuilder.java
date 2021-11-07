@@ -1,10 +1,10 @@
 package manageme.testutil;
 
 import manageme.logic.commands.link.EditLinkCommand.EditLinkDescriptor;
+import manageme.model.Name;
 import manageme.model.TagModule;
 import manageme.model.link.Link;
 import manageme.model.link.LinkAddress;
-import manageme.model.Name;
 
 /**
  * A utility class to help with building EditLinkDescriptor objects.

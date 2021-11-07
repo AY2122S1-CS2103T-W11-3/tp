@@ -86,7 +86,7 @@ public class ModelManagerTest {
 
     @Test
     public void has_linkInManageMe_returnsTrue() {
-        modelManager.addLink(LINK_A);
+        modelManager.add(LINK_A);
         assertTrue(modelManager.has(LINK_A));
     }
 
@@ -107,7 +107,7 @@ public class ModelManagerTest {
 
     @Test
     public void has_moduleInManageMe_returnsTrue() {
-        modelManager.addModule(MODULE_A);
+        modelManager.add(MODULE_A);
         assertTrue(modelManager.has(MODULE_A));
     }
 
@@ -128,7 +128,7 @@ public class ModelManagerTest {
 
     @Test
     public void has_taskInManageMe_returnsTrue() {
-        modelManager.addTask(TASK_A);
+        modelManager.add(TASK_A);
         assertTrue(modelManager.has(TASK_A));
     }
 

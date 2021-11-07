@@ -56,23 +56,23 @@ public class UniqueLinkListTest {
 
     @Test
     public void set_nullTargetLink_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> uniqueLinkList.set(null, LINK_A));
+        assertThrows(NullPointerException.class, () -> uniqueLinkList.setT(null, LINK_A));
     }
 
     @Test
     public void set_nullEditedLink_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> uniqueLinkList.set(LINK_A, null));
+        assertThrows(NullPointerException.class, () -> uniqueLinkList.setT(LINK_A, null));
     }
 
     @Test
     public void set_targetLinkNotInList_throwsLinkNotFoundException() {
-        assertThrows(LinkNotFoundException.class, () -> uniqueLinkList.set(LINK_A, LINK_A));
+        assertThrows(LinkNotFoundException.class, () -> uniqueLinkList.setT(LINK_A, LINK_A));
     }
 
     @Test
     public void set_editedLinkisSame_success() {
         uniqueLinkList.add(LINK_A);
-        uniqueLinkList.set(LINK_A, LINK_A);
+        uniqueLinkList.setT(LINK_A, LINK_A);
         UniqueLinkList expectedUniqueLinkList = new UniqueLinkList();
         expectedUniqueLinkList.add(LINK_A);
         assertEquals(expectedUniqueLinkList, uniqueLinkList);
@@ -82,7 +82,7 @@ public class UniqueLinkListTest {
     public void set_editedLinkHasSameIdentity_success() {
         uniqueLinkList.add(LINK_A);
         Link editedLink = new LinkBuilder(LINK_A).withName("edited").build();
-        uniqueLinkList.set(LINK_A, editedLink);
+        uniqueLinkList.setT(LINK_A, editedLink);
         UniqueLinkList expectedUniqueLinkList = new UniqueLinkList();
         expectedUniqueLinkList.add(editedLink);
         assertEquals(expectedUniqueLinkList, uniqueLinkList);
@@ -91,7 +91,7 @@ public class UniqueLinkListTest {
     @Test
     public void set_editedLinkHasDifferentIdentity_success() {
         uniqueLinkList.add(LINK_A);
-        uniqueLinkList.set(LINK_A, LINK_B);
+        uniqueLinkList.setT(LINK_A, LINK_B);
         UniqueLinkList expectedUniqueLinkList = new UniqueLinkList();
         expectedUniqueLinkList.add(LINK_B);
         assertEquals(expectedUniqueLinkList, uniqueLinkList);
@@ -101,7 +101,7 @@ public class UniqueLinkListTest {
     public void set_editedLinkHasNonUniqueIdentity_throwsDuplicateLinkException() {
         uniqueLinkList.add(LINK_A);
         uniqueLinkList.add(LINK_B);
-        assertThrows(DuplicateLinkException.class, () -> uniqueLinkList.set(LINK_A, LINK_B));
+        assertThrows(DuplicateLinkException.class, () -> uniqueLinkList.setT(LINK_A, LINK_B));
     }
 
     @Test
@@ -124,7 +124,7 @@ public class UniqueLinkListTest {
 
     @Test
     public void sets_nullUniqueLinkList_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> uniqueLinkList.sets((UniqueLinkList) null));
+        assertThrows(NullPointerException.class, () -> uniqueLinkList.setTs((UniqueLinkList) null));
     }
 
     @Test
@@ -132,20 +132,20 @@ public class UniqueLinkListTest {
         uniqueLinkList.add(LINK_A);
         UniqueLinkList expectedUniqueLinkList = new UniqueLinkList();
         expectedUniqueLinkList.add(LINK_B);
-        uniqueLinkList.sets(expectedUniqueLinkList);
+        uniqueLinkList.setTs(expectedUniqueLinkList);
         assertEquals(expectedUniqueLinkList, uniqueLinkList);
     }
 
     @Test
     public void sets_nullList_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> uniqueLinkList.sets((List<Link>) null));
+        assertThrows(NullPointerException.class, () -> uniqueLinkList.setTs((List<Link>) null));
     }
 
     @Test
     public void sets_list_replacesOwnListWithProvidedList() {
         uniqueLinkList.add(LINK_A);
         List<Link> linkList = Collections.singletonList(LINK_B);
-        uniqueLinkList.sets(linkList);
+        uniqueLinkList.setTs(linkList);
         UniqueLinkList expectedUniqueLinkList = new UniqueLinkList();
         expectedUniqueLinkList.add(LINK_B);
         assertEquals(expectedUniqueLinkList, uniqueLinkList);
@@ -154,7 +154,7 @@ public class UniqueLinkListTest {
     @Test
     public void sets_listWithDuplicateLinks_throwsDuplicateLinkException() {
         List<Link> listWithDuplicateLinks = Arrays.asList(LINK_A, LINK_A);
-        assertThrows(DuplicateLinkException.class, () -> uniqueLinkList.sets(listWithDuplicateLinks));
+        assertThrows(DuplicateLinkException.class, () -> uniqueLinkList.setTs(listWithDuplicateLinks));
     }
 
     @Test

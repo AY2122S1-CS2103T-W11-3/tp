@@ -1,9 +1,9 @@
 package manageme.testutil;
 
+import manageme.model.Name;
 import manageme.model.TagModule;
 import manageme.model.link.Link;
 import manageme.model.link.LinkAddress;
-import manageme.model.Name;
 
 public class LinkBuilder {
     public static final String DEFAULT_NAME = "Tutorial";

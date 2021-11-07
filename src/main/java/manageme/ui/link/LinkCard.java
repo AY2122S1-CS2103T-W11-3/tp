@@ -30,7 +30,7 @@ public class LinkCard extends UiPart<Region> {
     @FXML
     private VBox linkCardPane;
     @FXML
-    private Label Name;
+    private Label name;
     @FXML
     private Label linkId;
     @FXML
@@ -47,7 +47,7 @@ public class LinkCard extends UiPart<Region> {
         super(FXML);
         this.link = link;
         linkId.setText(displayedIndex + ". ");
-        Name.setText(link.getName().value);
+        name.setText(link.getName().value);
         linkAddress.setText(link.getAddress().value);
         linkModule.setText(link.getLinkModule().value);
     }

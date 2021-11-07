@@ -81,7 +81,7 @@ public class UniqueObjectList<T extends ManageMeObject> implements Iterable<T> {
     public void setTs(List<T> objects) {
         CollectionUtil.requireAllNonNull(objects);
         if (!objectsAreUnique(objects)) {
-            objects.get(0).throwNotFoundException();
+            objects.get(0).throwDuplicateException();
         }
 
         internalList.setAll(objects);

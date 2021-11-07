@@ -1,7 +1,7 @@
 package manageme.testutil;
 
-import manageme.model.module.Module;
 import manageme.model.Name;
+import manageme.model.module.Module;
 
 public class ModuleBuilder {
     public static final String DEFAULT_NAME = "CS2100";

@@ -16,8 +16,8 @@ import org.junit.jupiter.api.Test;
 
 import manageme.model.Model;
 import manageme.model.ModelManager;
-import manageme.model.UserPrefs;
 import manageme.model.NameContainsKeywordsPredicate;
+import manageme.model.UserPrefs;
 
 public class FindLinkCommandTest {
     private Model model = new ModelManager(getTypicalManageMe(), new UserPrefs());

@@ -29,7 +29,7 @@ public class DeleteModuleCommandTest {
         String expectedMessage = String.format(DeleteModuleCommand.MESSAGE_DELETE_MODULE_SUCCESS, moduleToDelete);
 
         ModelManager expectedModel = new ModelManager(model.getManageMe(), new UserPrefs());
-        expectedModel.deleteModule(moduleToDelete);
+        expectedModel.delete(moduleToDelete);
         expectedModel.editModuleInTasksWithModule(moduleToDelete, TagModule.empty());
         expectedModel.editModuleInLinksWithModule(moduleToDelete, manageme.model.TagModule.empty());
 

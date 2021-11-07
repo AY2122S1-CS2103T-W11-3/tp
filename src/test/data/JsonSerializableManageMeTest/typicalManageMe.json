@@ -10,25 +10,25 @@
     "module": "CS2103"
   } ],
   "modules": [ {
-    "modName" : "CS2100"
+    "name" : "CS2100"
   } , {
-    "modName" : "CS2103"
+    "name" : "CS2103"
   } , {
-    "modName" : "CS1231"
+    "name" : "CS1231"
   } ],
   "tasks": [ {
     "isDone": "no",
     "module" : "",
     "start" : "2021-10-05T11:50",
     "end" : "2021-10-05T14:00",
-    "Name" : "Eat with friends",
+    "name" : "Eat with friends",
     "taskDescription" : "At NUS UTown"
   }, {
     "isDone": "no",
     "module" : "CS2100",
     "start" : "2021-10-07T23:59",
     "end" : "2021-10-14T23:59",
-    "Name" : "Work on CS2100 Assignment 2",
+    "name" : "Work on CS2100 Assignment 2",
     "taskDescription" : "Refer to lectures 7-13"
   } ]
 }

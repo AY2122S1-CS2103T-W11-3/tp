@@ -26,7 +26,7 @@ public class ManageMeBuilder {
      * Adds a new {@code Link} to the {@code ManageMe} that we are building.
      */
     public ManageMeBuilder withLink(Link link) {
-        manageMe.addLink(link);
+        manageMe.add(link);
         return this;
     }
 
@@ -34,7 +34,7 @@ public class ManageMeBuilder {
      * Adds a new {@code Module} to the {@code ManageMe} that we are building.
      */
     public ManageMeBuilder withModule(Module module) {
-        manageMe.addModule(module);
+        manageMe.add(module);
         return this;
     }
 
@@ -42,7 +42,7 @@ public class ManageMeBuilder {
      * Adds a new {@code Task} to the {@code ManageMe} that we are building.
      */
     public ManageMeBuilder withTask(Task task) {
-        manageMe.addTask(task);
+        manageMe.add(task);
         return this;
     }
 

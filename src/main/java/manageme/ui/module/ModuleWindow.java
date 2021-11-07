@@ -78,13 +78,13 @@ public class ModuleWindow extends UiPart<Stage> {
      */
     public void fillTaskList(Module module, ObservableList<Task> unfilteredTaskList) {
         FilteredList<Task> tasks = unfilteredTaskList.filtered(task -> {
-            Optional<String> TagModule = task.getTagModule().Name;
+            Optional<String> tagModule = task.getTagModule().name;
 
-            if (TagModule.isEmpty()) {
+            if (tagModule.isEmpty()) {
                 return false;
             }
 
-            return module.getName().value.equals(TagModule.get());
+            return module.getName().value.equals(tagModule.get());
         });
 
         readTaskList.getChildren().add(new TaskListPanel(tasks).getRoot());
@@ -95,7 +95,7 @@ public class ModuleWindow extends UiPart<Stage> {
      */
     public void fillLinkList(Module module, ObservableList<Link> unfilteredLinkList) {
         FilteredList<Link> links = unfilteredLinkList.filtered(link -> {
-            Optional<String> linkModule = link.getLinkModule().Name;
+            Optional<String> linkModule = link.getLinkModule().name;
 
             if (linkModule.isEmpty()) {
                 return false;

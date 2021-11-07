@@ -14,10 +14,10 @@ import manageme.logic.parser.Parser;
 import manageme.logic.parser.ParserUtil;
 import manageme.logic.parser.Prefix;
 import manageme.logic.parser.exceptions.ParseException;
+import manageme.model.Name;
 import manageme.model.TagModule;
 import manageme.model.link.Link;
 import manageme.model.link.LinkAddress;
-import manageme.model.Name;
 
 /**
  * Parses input arguments and creates a new AddCommand object

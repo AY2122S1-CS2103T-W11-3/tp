@@ -1,8 +1,7 @@
-package manageme.model.task;
+package manageme.model;
 
 import static manageme.testutil.Assert.assertThrows;
-import static manageme.testutil.TypicalTasks.TASK_A;
-import static manageme.testutil.TypicalTasks.TASK_B;
+import static manageme.testutil.TypicalLinks.LINK_A;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -14,7 +13,7 @@ public class TagModuleTest {
         assertThrows(NullPointerException.class, () -> new TagModule(null));
     }
     @Test
-    public void constructor_invalidTagModule_throwsIllegalArgumentException() {
+    public void constructor_invalidLinkModule_throwsIllegalArgumentException() {
         String invalidModule = "**";
         assertThrows(IllegalArgumentException.class, () -> new TagModule(invalidModule));
     }
@@ -36,19 +35,14 @@ public class TagModuleTest {
     @Test
     public void equals() {
         // same module, returns true
-        assertTrue(TASK_A.getTagModule().equals(TASK_A.getTagModule()));
-
-        // different module, returns false
-        assertFalse(TASK_A.getTagModule().equals(TASK_B.getTagModule()));
+        assertTrue(LINK_A.getLinkModule().equals(LINK_A.getLinkModule()));
     }
-
     @Test
     public void empty() {
         // Empty TagModule with value set as ""
-        assertTrue(manageme.model.TagModule.empty().value.equals(""));
+        assertTrue(TagModule.empty().value.equals(""));
 
         // Empty TagModule with Name set as an empty Optional<String>
-        assertTrue(manageme.model.TagModule.empty().Name.isEmpty());
+        assertTrue(manageme.model.TagModule.empty().name.isEmpty());
     }
-
 }

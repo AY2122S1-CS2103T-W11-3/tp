@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import manageme.commons.exceptions.IllegalValueException;
+import manageme.model.Name;
 import manageme.model.TagModule;
 import manageme.model.link.Link;
 import manageme.model.link.LinkAddress;
-import manageme.model.Name;
 
 /**
  * Jackson-friendly version of {@link Link}.
@@ -25,9 +25,9 @@ public class JsonAdaptedLink {
      * Constructs a {@code JsonAdaptedLink} with the given person details.
      */
     @JsonCreator
-    public JsonAdaptedLink(@JsonProperty("name") String Name, @JsonProperty("address") String address,
+    public JsonAdaptedLink(@JsonProperty("name") String name, @JsonProperty("address") String address,
                            @JsonProperty("module") String module) {
-        this.name = Name;
+        this.name = name;
         this.address = address;
         this.module = module;
     }

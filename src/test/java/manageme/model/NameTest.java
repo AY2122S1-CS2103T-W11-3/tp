@@ -1,7 +1,6 @@
-package manageme.model.link;
+package manageme.model;
 
 import static manageme.testutil.Assert.assertThrows;
-import static manageme.testutil.TypicalLinks.LINK_A;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -21,25 +20,20 @@ public class NameTest {
 
     @Test
     public void isValidName() {
-        // null name
+        // null Name
         assertThrows(NullPointerException.class, () -> Name.isValidName(null));
 
-        // invalid name
+        // invalid Name
         assertFalse(Name.isValidName("")); // empty string
         assertFalse(Name.isValidName(" ")); // spaces only
+        assertFalse(Name.isValidName("^")); // only non-alphanumeric characters
+        assertFalse(Name.isValidName("CS2100*")); // contains non-alphanumeric characters
 
-        // valid name
-        assertTrue(Name.isValidName("google")); // alphabets only
+        // valid Name
+        assertTrue(Name.isValidName("CSCS")); // alphabets only
         assertTrue(Name.isValidName("12345")); // numbers only
-        assertTrue(Name.isValidName("notes for cs1101")); // alphanumeric characters
-        assertTrue(Name.isValidName("assignments for CS1101")); // with capital letters
-        assertTrue(Name.isValidName("Plan out next week timetable by this Friday")); // long names
-    }
-
-    @Test
-    public void equals() {
-        // same name, returns true
-        assertTrue(LINK_A.getName().equals(LINK_A.getName()));
-
+        assertTrue(Name.isValidName("cs2100")); // alphanumeric characters
+        assertTrue(Name.isValidName("CS2100")); // with capital letters
+        assertTrue(Name.isValidName("CS2100 Computer Organization")); // long Names
     }
 }

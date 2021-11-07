@@ -16,10 +16,10 @@ import manageme.logic.parser.Parser;
 import manageme.logic.parser.ParserUtil;
 import manageme.logic.parser.Prefix;
 import manageme.logic.parser.exceptions.ParseException;
+import manageme.model.Name;
+import manageme.model.TagModule;
 import manageme.model.task.Task;
 import manageme.model.task.TaskDescription;
-import manageme.model.TagModule;
-import manageme.model.Name;
 import manageme.model.task.TaskTime;
 
 public class AddTaskCommandParser implements Parser<AddTaskCommand> {

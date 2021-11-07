@@ -34,7 +34,7 @@ public class DeleteLinkCommandTest {
         String expectedMessage = String.format(DeleteLinkCommand.MESSAGE_DELETE_LINK_SUCCESS, linkToDelete);
 
         ModelManager expectedModel = new ModelManager(model.getManageMe(), new UserPrefs());
-        expectedModel.deleteLink(linkToDelete);
+        expectedModel.delete(linkToDelete);
 
         assertCommandSuccess(deleteLinkCommand, model, expectedMessage, expectedModel);
     }
@@ -56,7 +56,7 @@ public class DeleteLinkCommandTest {
         String expectedMessage = String.format(DeleteLinkCommand.MESSAGE_DELETE_LINK_SUCCESS, linkToDelete);
 
         Model expectedModel = new ModelManager(model.getManageMe(), new UserPrefs());
-        expectedModel.deleteLink(linkToDelete);
+        expectedModel.delete(linkToDelete);
         showNoLink(expectedModel);
 
         assertCommandSuccess(deleteLinkCommand, model, expectedMessage, expectedModel);

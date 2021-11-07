@@ -46,7 +46,6 @@ public class ManageMe implements ReadOnlyManageMe {
         this();
         resetData(toBeCopied);
     }
-    
 
     /**
      * Replaces the contents of the link list with {@code links}.

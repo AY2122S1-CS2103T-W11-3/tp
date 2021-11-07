@@ -41,7 +41,7 @@ public class TypicalTasks {
     public static ManageMe getTypicalManageMe() {
         ManageMe ab = new ManageMe();
         for (Task task : getTypicalTasks()) {
-            ab.addTask(task);
+            ab.add(task);
         }
         return ab;
     }

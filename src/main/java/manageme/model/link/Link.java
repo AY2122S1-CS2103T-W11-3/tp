@@ -13,7 +13,7 @@ import manageme.model.link.exceptions.LinkNotFoundException;
  * Represents a link in the app.
  * Guarantees: field values are validated, immutable
  */
-public class Link extends ManageMeObject{
+public class Link extends ManageMeObject {
 
     private final LinkAddress address;
     private final TagModule module;

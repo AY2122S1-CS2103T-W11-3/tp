@@ -6,13 +6,13 @@
       "module": "@@",
       "start": "2021-10-05T11:50",
       "end": "2021-10-05T14:00",
-      "Name": " ",
+      "name": " ",
       "taskDescription": "At NUS UTown"
     }, {
       "module": "",
       "start": "2021-10-07T23:59",
       "end": "2021-10-14T23:59",
-      "Name": "Work on CS2100 Assignment 2",
+      "name": "Work on CS2100 Assignment 2",
       "taskDescription": "Refer to lectures 7-13"
     }
   ]

@@ -22,21 +22,21 @@ public class AddModuleCommand extends Command {
     public static final String MESSAGE_SUCCESS = "New module added: %1$s";
     public static final String MESSAGE_DUPLICATE_MODULE = "This module already exists in the app.";
 
-    private final Name Name;
+    private final Name name;
 
     /**
      * Creates an AddModuleCommand to add the specified {@code Module}
      */
-    public AddModuleCommand(Name Name) {
-        requireNonNull(Name);
-        this.Name = Name;
+    public AddModuleCommand(Name name) {
+        requireNonNull(name);
+        this.name = name;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        Module toAdd = new Module(Name);
+        Module toAdd = new Module(name);
 
 
         if (model.has(toAdd)) {
@@ -51,6 +51,6 @@ public class AddModuleCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddModuleCommand // instanceof handles nulls
-                && Name.equals(((AddModuleCommand) other).Name));
+                && name.equals(((AddModuleCommand) other).name));
     }
 }

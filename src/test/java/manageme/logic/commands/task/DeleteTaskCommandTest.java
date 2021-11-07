@@ -34,7 +34,7 @@ public class DeleteTaskCommandTest {
         String expectedMessage = String.format(DeleteTaskCommand.MESSAGE_DELETE_TASK_SUCCESS, taskToDelete);
 
         ModelManager expectedModel = new ModelManager(model.getManageMe(), new UserPrefs());
-        expectedModel.deleteTask(taskToDelete);
+        expectedModel.delete(taskToDelete);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
@@ -57,7 +57,7 @@ public class DeleteTaskCommandTest {
         String expectedMessage = String.format(DeleteTaskCommand.MESSAGE_DELETE_TASK_SUCCESS, taskToDelete);
 
         Model expectedModel = new ModelManager(model.getManageMe(), new UserPrefs());
-        expectedModel.deleteTask(taskToDelete);
+        expectedModel.delete(taskToDelete);
         showNoTask(expectedModel);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);

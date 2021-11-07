@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
-
 <VBox fx:id="taskCardPane" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
    <padding>
       <Insets bottom="5" left="15" right="5" top="5" />
@@ -18,7 +17,7 @@
                   <Region fx:constant="USE_PREF_SIZE" />
                </minWidth>
             </Label>
-            <Label fx:id="Name" text="\$first" wrapText="true" />
+            <Label fx:id="name" text="\$first" wrapText="true" />
          </children>
       </HBox>
       <HBox minWidth="-Infinity">
@@ -26,7 +25,7 @@
             <Label fx:id="taskDescription" maxWidth="1.7976931348623157E308" text="\$description" wrapText="true" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
-      <Label fx:id="TagModule" VBox.vgrow="NEVER" />
+      <Label fx:id="tagModule" VBox.vgrow="NEVER" />
       <Label fx:id="startTime" VBox.vgrow="NEVER" />
       <Label fx:id="endTime" layoutX="25.0" layoutY="80.0" VBox.vgrow="NEVER" />
    </children>

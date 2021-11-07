@@ -16,8 +16,8 @@ import org.junit.jupiter.api.Test;
 
 import manageme.model.Model;
 import manageme.model.ModelManager;
+import manageme.model.NameContainsKeywordsPredicate;
 import manageme.model.UserPrefs;
-import manageme.model.module.NameContainsKeywordsPredicate;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindModuleCommand}.

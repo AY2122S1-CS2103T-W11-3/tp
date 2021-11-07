@@ -1,6 +1,6 @@
 package manageme.logic.parser;
 
-import static manageme.logic.commands.link.LinkCommandTestUtil.VALID_Name_A;
+import static manageme.logic.commands.link.LinkCommandTestUtil.VALID_NAME_A;
 import static manageme.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static manageme.testutil.Assert.assertThrows;
 import static manageme.testutil.TypicalIndexes.INDEX_FIRST;
@@ -16,31 +16,20 @@ import org.junit.jupiter.api.Test;
 
 import manageme.logic.parser.exceptions.ParseException;
 import manageme.model.Name;
+import manageme.model.TagModule;
 import manageme.model.tag.Tag;
 import manageme.model.task.TaskDescription;
-import manageme.model.TagModule;
-import manageme.model.Name;
 import manageme.model.task.TaskTime;
 
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
-    private static final String INVALID_PHONE = "+651234";
-    private static final String INVALID_ADDRESS = " ";
-    private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
 
-    private static final String VALID_NAME = "Rachel Walker";
-    private static final String VALID_PHONE = "123456";
-    private static final String VALID_ADDRESS = "123 Main Street #0505";
-    private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
     private static final String WHITESPACE = " \t\r\n";
 
-    private static final String INVALID_Name = "";
-
-    private static final String VALID_Name = "Do work";
     private static final String VALID_TASKDESCRIPTION = "immediately";
     private static final String VALID_TagModule = "CS2103T";
     private static final String VALID_TASKTIME = "2021-10-05T11:40";
@@ -77,14 +66,14 @@ public class ParserUtilTest {
 
     @Test
     public void parseName_validValueWithoutWhitespace_returnsName() throws Exception {
-        Name expectedName = new Name(VALID_Name_A);
-        assertEquals(expectedName, ParserUtil.parseName(VALID_Name_A));
+        Name expectedName = new Name(VALID_NAME_A);
+        assertEquals(expectedName, ParserUtil.parseName(VALID_NAME_A));
     }
 
     @Test
     public void parseName_validValueWithWhitespace_returnsTrimmedName() throws Exception {
-        String nameWithWhitespace = WHITESPACE + VALID_Name_A + WHITESPACE;
-        Name expectedName = new Name(VALID_Name_A);
+        String nameWithWhitespace = WHITESPACE + VALID_NAME_A + WHITESPACE;
+        Name expectedName = new Name(VALID_NAME_A);
         assertEquals(expectedName, ParserUtil.parseName(nameWithWhitespace));
     }
 
@@ -132,29 +121,6 @@ public class ParserUtilTest {
         Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
         assertEquals(expectedTagSet, actualTagSet);
-    }
-
-    @Test
-    public void parseName_null_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> ParserUtil.parseName((String) null));
-    }
-
-    @Test
-    public void parseName_invalidValue_throwsParseException() {
-        assertThrows(ParseException.class, () -> ParserUtil.parseName(INVALID_Name));
-    }
-
-    @Test
-    public void parseName_validValueWithoutWhitespace_returnsName() throws Exception {
-        Name expectedName = new Name(VALID_Name);
-        assertEquals(expectedName, ParserUtil.parseName(VALID_Name));
-    }
-
-    @Test
-    public void parseName_validValueWithWhitespace_returnsTrimmedName() throws Exception {
-        String NameWithWhitespace = WHITESPACE + VALID_Name + WHITESPACE;
-        Name expectedName = new Name(VALID_Name);
-        assertEquals(expectedName, ParserUtil.parseName(NameWithWhitespace));
     }
 
     @Test

@@ -1,10 +1,10 @@
 package manageme.testutil;
 
+import manageme.model.Name;
+import manageme.model.TagModule;
 import manageme.model.task.Task;
 import manageme.model.task.TaskDescription;
 import manageme.model.task.TaskIsDone;
-import manageme.model.TagModule;
-import manageme.model.Name;
 import manageme.model.task.TaskTime;
 
 /**
@@ -69,8 +69,8 @@ public class TaskBuilder {
     /**
      * Sets the {@code module} of the {@code Task} that we are building.
      */
-    public TaskBuilder withModule(String TagModule) {
-        this.module = TagModule.equals("") ? TagModule.empty() : new TagModule(TagModule);
+    public TaskBuilder withModule(String tagModule) {
+        this.module = tagModule.equals("") ? TagModule.empty() : new TagModule(tagModule);
         return this;
     }
     /**
@@ -102,4 +102,3 @@ public class TaskBuilder {
     }
 
 }
-

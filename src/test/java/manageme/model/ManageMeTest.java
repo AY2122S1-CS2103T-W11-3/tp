@@ -99,13 +99,13 @@ public class ManageMeTest {
 
     @Test
     public void has_linkInManageMe_returnsTrue() {
-        manageMe.addLink(LINK_A);
+        manageMe.add(LINK_A);
         assertTrue(manageMe.has(LINK_A));
     }
 
     @Test
     public void has_linkWithSameIdentityFieldsInManageMe_returnsTrue() {
-        manageMe.addLink(LINK_A);
+        manageMe.add(LINK_A);
         Link editedAlice = new LinkBuilder(LINK_B).withAddress(VALID_LINKADDRESS_A).withModule(VALID_LINKMODULE_B)
                 .build();
         assertTrue(manageMe.has(editedAlice));
@@ -128,13 +128,13 @@ public class ManageMeTest {
 
     @Test
     public void has_moduleInManageMe_returnsTrue() {
-        manageMe.addModule(MODULE_A);
+        manageMe.add(MODULE_A);
         assertTrue(manageMe.has(MODULE_A));
     }
 
     @Test
     public void has_moduleWithSameIdentityFieldsInManageMe_returnsTrue() {
-        manageMe.addModule(MODULE_A);
+        manageMe.add(MODULE_A);
         Module editedModule = new ModuleBuilder(MODULE_A).build();
         assertTrue(manageMe.has(editedModule));
     }
@@ -156,13 +156,13 @@ public class ManageMeTest {
 
     @Test
     public void has_taskInManageMe_returnsTrue() {
-        manageMe.addTask(TASK_A);
+        manageMe.add(TASK_A);
         assertTrue(manageMe.has(TASK_A));
     }
 
     @Test
     public void has_taskWithSameIdentityFieldsInManageMe_returnsTrue() {
-        manageMe.addTask(TASK_A);
+        manageMe.add(TASK_A);
         Task editedTask = new TaskBuilder(TASK_A).withDescription(TaskCommandTestUtil.VALID_DESCRIPTION_A)
                 .withModule(TaskCommandTestUtil.VALID_MODULE_A).build();
         assertTrue(manageMe.has(editedTask));

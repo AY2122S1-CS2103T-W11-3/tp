@@ -11,7 +11,7 @@ Given below are my contributions to the project.
 
 * **New Feature**: Added addMod command
   * What it does: Allows users to add a Module to ManageMe.
-  * Justification: This allows users 
+  * Justification: This allows users
   * Difficulty:  This function was not difficult to implement, however it was modified in different stages of the project
     due to changing needs. Initially in v1.2, a module contains both a name and a Link, thus addMod must be able to add both.
     However, later in v1.3, Link was extracted out to become a standalone class with its own commands,
@@ -19,7 +19,7 @@ Given below are my contributions to the project.
 
 * **New Feature**: Added deleteMod command.
   * What it does: Allows users to delete a Module to ManageMe.
-  * Justification: This is not 
+  * Justification: This is not
 
 * **New Feature**: Introducing link functionality with both local filepath and website url
   * What it does: Allows users to search for links to ManageMe.
@@ -40,8 +40,8 @@ Given below are my contributions to the project.
 * What it does: Allows users to open a file or a folder using the system default application from ManageMe, or open a
 url using a local web browser.
 * Justification: This allows users to open the folders and websites that they frequently access with only one command,
-which is very convenient to use and saves users from the trouble of digging through their inbox with thousands of 
-* Difficulty: This is challenging. Java desktop doesn't perform well on Linux. 
+which is very convenient to use and saves users from the trouble of digging through their inbox with thousands of
+* Difficulty: This is challenging. Java desktop doesn't perform well on Linux.
 
 * **Code contributed**: [RepoSense link]()
 

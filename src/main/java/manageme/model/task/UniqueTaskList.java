@@ -24,11 +24,11 @@ import manageme.model.task.exceptions.TaskNotFoundException;
  * @see Task#isSame(Task)
  */
 public class UniqueTaskList extends UniqueObjectList<Task> {
-    
+
     private ArrayList<Task> sortedList = new ArrayList<>();
 
     /**
-     * Adds a task to the list.s
+     * Adds a task to the list.
      * The task must not already exist in the list.
      */
     @Override

@@ -82,13 +82,13 @@ public class JsonManageMeStorageTest {
         assertEquals(original, new ManageMe(readBack));
 
         // Modify data, overwrite exiting file, and read back
-        original.removeLink(TypicalLinks.LINK_B);
+        original.remove(TypicalLinks.LINK_B);
         jsonManageMeStorage.saveManageMe(original, filePath);
         readBack = jsonManageMeStorage.readManageMe(filePath).get();
         assertEquals(original, new ManageMe(readBack));
 
         // Save and read without specifying file path
-        original.addLink(TypicalLinks.LINK_B);
+        original.add(TypicalLinks.LINK_B);
         jsonManageMeStorage.saveManageMe(original); // file path not specified
         readBack = jsonManageMeStorage.readManageMe().get(); // file path not specified
         assertEquals(original, new ManageMe(readBack));

@@ -19,6 +19,7 @@ import manageme.commons.core.GuiSettings;
 import manageme.logic.commands.CommandResult;
 import manageme.logic.commands.exceptions.CommandException;
 import manageme.model.ManageMe;
+import manageme.model.ManageMeObject;
 import manageme.model.Model;
 import manageme.model.ReadOnlyManageMe;
 import manageme.model.ReadOnlyUserPrefs;
@@ -115,11 +116,6 @@ public class AddLinkCommandTest {
         }
 
         @Override
-        public void addLink(Link link) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
         public void setManageMe(ReadOnlyManageMe newData) {
             throw new AssertionError("This method should not be called.");
         }
@@ -130,17 +126,22 @@ public class AddLinkCommandTest {
         }
 
         @Override
-        public boolean has(Link link) {
+        public <T extends ManageMeObject> boolean has(T target) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void deleteLink(Link target) {
+        public <T extends ManageMeObject> void delete(T target) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void set(Link target, Link editedLink) {
+        public <T extends ManageMeObject> void set(T target, T edited) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public <T extends ManageMeObject> void add(T target) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -165,26 +166,6 @@ public class AddLinkCommandTest {
         }
 
         @Override
-        public boolean has(Module module) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void deleteModule(Module target) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void addModule(Module module) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setModule(Module target, Module editedModule) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
         public ObservableList<Module> getFilteredModuleList() {
             throw new AssertionError("This method should not be called.");
         }
@@ -201,26 +182,6 @@ public class AddLinkCommandTest {
 
         @Override
         public void setReadModule(Module module) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public boolean has(Task task) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void deleteTask(Task target) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void addTask(Task task) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void set(Task target, Task editedTask) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -244,7 +205,6 @@ public class AddLinkCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
-
         @Override
         public void updateFilteredTaskList(Predicate<Task> predicate) {
             throw new AssertionError("This method should not be called.");
@@ -263,9 +223,9 @@ public class AddLinkCommandTest {
         }
 
         @Override
-        public boolean has(Link link) {
+        public <T extends ManageMeObject> boolean has(T link) {
             requireNonNull(link);
-            return this.link.isSame(link);
+            return this.link.isSame((Link) link);
         }
     }
 
@@ -276,21 +236,21 @@ public class AddLinkCommandTest {
         final ArrayList<Link> linksAdded = new ArrayList<>();
 
         @Override
-        public boolean has(Link link) {
-            requireNonNull(link);
-            return linksAdded.stream().anyMatch(link::isSame);
+        public <T extends ManageMeObject> boolean has(T toCheck) {
+            requireNonNull(toCheck);
+            if (toCheck instanceof Link) {
+                return linksAdded.stream().anyMatch(toCheck::isSame);
+            } else if (toCheck instanceof Module) {
+                return true;
+            } else {
+                return false;
+            }
         }
 
         @Override
-        public void addLink(Link link) {
+        public <T extends ManageMeObject> void add(T link) {
             requireNonNull(link);
-            linksAdded.add(link);
-        }
-
-        @Override
-        public boolean has(Module module) {
-            requireNonNull(module);
-            return true;
+            linksAdded.add((Link) link);
         }
 
         @Override

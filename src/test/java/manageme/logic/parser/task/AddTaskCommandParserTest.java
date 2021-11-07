@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test;
 
 import manageme.logic.commands.task.AddTaskCommand;
 import manageme.logic.commands.task.TaskCommandTestUtil;
-import manageme.model.task.Task;
 import manageme.model.Name;
+import manageme.model.task.Task;
 import manageme.testutil.TaskBuilder;
 
 public class AddTaskCommandParserTest {
