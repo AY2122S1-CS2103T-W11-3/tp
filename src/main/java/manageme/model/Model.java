@@ -6,9 +6,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import manageme.commons.core.GuiSettings;
-import manageme.commons.core.index.Index;
 import manageme.model.link.Link;
-import manageme.model.link.LinkModule;
 import manageme.model.module.Module;
 import manageme.model.task.Task;
 
@@ -63,16 +61,13 @@ public interface Model {
     /** Returns the ManageMe */
     ReadOnlyManageMe getManageMe();
 
-    /**
-     * Returns true if a link with the same identity as {@code link} exists in the ManageMe.
-     */
-    boolean hasLink(Link link);
+    public <T extends ManageMeObject> boolean has(T target);
 
-    /**
-     * Deletes the given link.
-     * The link must exist in the ManageMe.
-     */
-    void deleteLink(Link target);
+    public <T extends ManageMeObject> void delete(T target);
+
+    public <T extends ManageMeObject> void set(T target, T edited);
+
+    public <T extends ManageMeObject> void add(T target);
 
     /**
      * Opens the given link.
@@ -81,53 +76,22 @@ public interface Model {
     void openLink(Link target);
 
     /**
-     * Adds the given link.
-     * {@code link} must not already exist in the ManageMe.
-     */
-    void addLink(Link link);
-
-    /**
-     * Replaces the given link {@code target} with {@code editedLink}.
+     * Replaces the module in tasks with modules matching the {@code target} with {@code newTagModule}.
      * {@code target} must exist in the ManageMe.
-     * The link identity of {@code editedLink} must not be the same as another existing link in the ManageMe.
      */
-    void setLink(Link target, Link editedLink);
+    void editModuleInLinksWithModule(Module target, TagModule newTagModule);
 
     /** Returns an unmodifiable view of the filtered link list */
     ObservableList<Link> getFilteredLinkList();
+
+    /** Returns an unmodifiable view of the filtered link list */
+    ObservableList<Module> getFilteredModuleList();
 
     /**
      * Updates the filter of the filtered link list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredLinkList(Predicate<Link> predicate);
-
-    /**
-     * Returns true if a module with the same identity as {@code module} exists in the ManageMe.
-     */
-    boolean hasModule(Module module);
-
-    /**
-     * Deletes the given module.
-     * The module must exist in the ManageMe.
-     */
-    void deleteModule(Module target);
-
-    /**
-     * Adds the given module.
-     * {@code module} must not already exist in the ManageMe.
-     */
-    void addModule(Module module);
-
-    /**
-     * Replaces the given module {@code target} with {@code editedModule}.
-     * {@code target} must exist in the ManageMe.
-     * The module identity of {@code editedModule} must not be the same as another existing module in the ManageMe.
-     */
-    void setModule(Module target, Module editedModule);
-
-    /** Returns an unmodifiable view of the filtered module list */
-    ObservableList<Module> getFilteredModuleList();
 
     /**
      * Updates the filter of the filtered module list to filter by the given {@code predicate}.
@@ -146,28 +110,10 @@ public interface Model {
     void setReadModule(Module module);
 
     /**
-     * Returns true if a task with the same identity as {@code task} exists in the ManageMe.
-     */
-    boolean hasTask(Task task);
-
-    /**
-     * Deletes the given task.
-     * The task must exist in the ManageMe.
-     */
-    void deleteTask(Task target);
-
-    /**
-     * Adds the given task.
-     * {@code task} must not already exist in the ManageMe.
-     */
-    void addTask(Task task);
-
-    /**
-     * Replaces the given task {@code target} with {@code editedtask}.
+     * Replaces the module in tasks with modules matching the {@code target} with {@code newTagModule}.
      * {@code target} must exist in the ManageMe.
-     * The task identity of {@code editedtask} must not be the same as another existing task in the ManageMe.
      */
-    void setTask(Task target, Task editedTask);
+    void editModuleInTasksWithModule(Module target, TagModule newTagModule);
 
     /** Returns an unmodifiable view of the filtered task list */
     ObservableList<Task> getFilteredTaskList();
@@ -183,6 +129,4 @@ public interface Model {
 
     /** Returns an unmodifiable view of the unfiltered link list */
     ObservableList<Link> getUnfilteredLinkList();
-
-    Link deleteModLink(LinkModule module, Index targetIndex);
 }

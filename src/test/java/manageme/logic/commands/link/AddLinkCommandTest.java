@@ -16,15 +16,15 @@ import org.junit.jupiter.api.Test;
 
 import javafx.collections.ObservableList;
 import manageme.commons.core.GuiSettings;
-import manageme.commons.core.index.Index;
 import manageme.logic.commands.CommandResult;
 import manageme.logic.commands.exceptions.CommandException;
 import manageme.model.ManageMe;
+import manageme.model.ManageMeObject;
 import manageme.model.Model;
 import manageme.model.ReadOnlyManageMe;
 import manageme.model.ReadOnlyUserPrefs;
+import manageme.model.TagModule;
 import manageme.model.link.Link;
-import manageme.model.link.LinkModule;
 import manageme.model.module.Module;
 import manageme.model.task.Task;
 import manageme.testutil.LinkBuilder;
@@ -111,12 +111,7 @@ public class AddLinkCommandTest {
         }
 
         @Override
-        public void setManageMeFilePath(Path addressBookFilePath) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void addLink(Link link) {
+        public void setManageMeFilePath(Path manageMeFilePath) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -131,27 +126,32 @@ public class AddLinkCommandTest {
         }
 
         @Override
-        public boolean hasLink(Link link) {
+        public <T extends ManageMeObject> boolean has(T target) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void deleteLink(Link target) {
+        public <T extends ManageMeObject> void delete(T target) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void setLink(Link target, Link editedLink) {
+        public <T extends ManageMeObject> void set(T target, T edited) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public <T extends ManageMeObject> void add(T target) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void editModuleInLinksWithModule(Module target, TagModule newTagModule) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public void openLink(Link target) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public Link deleteModLink(LinkModule linkModule, Index index) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -162,26 +162,6 @@ public class AddLinkCommandTest {
 
         @Override
         public void updateFilteredLinkList(Predicate<Link> predicate) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public boolean hasModule(Module module) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void deleteModule(Module target) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void addModule(Module module) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setModule(Module target, Module editedModule) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -206,22 +186,7 @@ public class AddLinkCommandTest {
         }
 
         @Override
-        public boolean hasTask(Task task) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void deleteTask(Task target) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void addTask(Task task) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setTask(Task target, Task editedTask) {
+        public void editModuleInTasksWithModule(Module target, manageme.model.TagModule newTagModule) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -239,7 +204,6 @@ public class AddLinkCommandTest {
         public ObservableList<Link> getUnfilteredLinkList() {
             throw new AssertionError("This method should not be called.");
         }
-
 
         @Override
         public void updateFilteredTaskList(Predicate<Task> predicate) {
@@ -259,9 +223,9 @@ public class AddLinkCommandTest {
         }
 
         @Override
-        public boolean hasLink(Link link) {
+        public <T extends ManageMeObject> boolean has(T link) {
             requireNonNull(link);
-            return this.link.isSameLink(link);
+            return this.link.isSame((Link) link);
         }
     }
 
@@ -272,21 +236,21 @@ public class AddLinkCommandTest {
         final ArrayList<Link> linksAdded = new ArrayList<>();
 
         @Override
-        public boolean hasLink(Link link) {
-            requireNonNull(link);
-            return linksAdded.stream().anyMatch(link::isSameLink);
+        public <T extends ManageMeObject> boolean has(T toCheck) {
+            requireNonNull(toCheck);
+            if (toCheck instanceof Link) {
+                return linksAdded.stream().anyMatch(toCheck::isSame);
+            } else if (toCheck instanceof Module) {
+                return true;
+            } else {
+                return false;
+            }
         }
 
         @Override
-        public void addLink(Link link) {
+        public <T extends ManageMeObject> void add(T link) {
             requireNonNull(link);
-            linksAdded.add(link);
-        }
-
-        @Override
-        public boolean hasModule(Module module) {
-            requireNonNull(module);
-            return true;
+            linksAdded.add((Link) link);
         }
 
         @Override

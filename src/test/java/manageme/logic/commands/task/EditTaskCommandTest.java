@@ -48,7 +48,7 @@ public class EditTaskCommandTest {
         String expectedMessage = String.format(EditTaskCommand.MESSAGE_EDIT_TASK_SUCCESS, editedTask);
 
         Model expectedModel = new ModelManager(new ManageMe(model.getManageMe()), new UserPrefs());
-        expectedModel.setTask(model.getFilteredTaskList().get(0), editedTask);
+        expectedModel.set(model.getFilteredTaskList().get(0), editedTask);
 
         assertCommandSuccess(editTaskCommand, model, expectedMessage, expectedModel);
     }
@@ -71,7 +71,7 @@ public class EditTaskCommandTest {
         String expectedMessage = String.format(EditTaskCommand.MESSAGE_EDIT_TASK_SUCCESS, editedTask);
 
         Model expectedModel = new ModelManager(new ManageMe(model.getManageMe()), new UserPrefs());
-        expectedModel.setTask(lastTask, editedTask);
+        expectedModel.set(lastTask, editedTask);
 
         assertCommandSuccess(editTaskCommand, model, expectedMessage, expectedModel);
     }
@@ -104,7 +104,7 @@ public class EditTaskCommandTest {
         String expectedMessage = String.format(EditTaskCommand.MESSAGE_EDIT_TASK_SUCCESS, editedTask);
 
         Model expectedModel = new ModelManager(new ManageMe(model.getManageMe()), new UserPrefs());
-        expectedModel.setTask(model.getFilteredTaskList().get(0), editedTask);
+        expectedModel.set(model.getFilteredTaskList().get(0), editedTask);
 
         assertCommandSuccess(editTaskCommand, model, expectedMessage, expectedModel);
     }

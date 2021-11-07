@@ -20,7 +20,7 @@ public class ModuleUtil {
      */
     public static String getModuleDetails(Module module) {
         StringBuilder sb = new StringBuilder();
-        sb.append(PREFIX_NAME + module.getModuleName().value + " ");
+        sb.append(PREFIX_NAME + module.getName().value + " ");
         return sb.toString();
     }
 
@@ -29,7 +29,7 @@ public class ModuleUtil {
      */
     public static String getEditModuleDescriptorDetails(EditModuleCommand.EditModuleDescriptor descriptor) {
         StringBuilder sb = new StringBuilder();
-        descriptor.getModuleName().ifPresent(name -> sb.append(PREFIX_NAME).append(name.value).append(" "));
+        descriptor.getName().ifPresent(name -> sb.append(PREFIX_NAME).append(name.value).append(" "));
         return sb.toString();
     }
 }

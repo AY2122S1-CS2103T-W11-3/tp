@@ -6,7 +6,7 @@ import manageme.commons.core.Messages;
 import manageme.logic.commands.task.FindTaskCommand;
 import manageme.logic.parser.Parser;
 import manageme.logic.parser.exceptions.ParseException;
-import manageme.model.task.TaskNameContainsKeywordsPredicate;
+import manageme.model.NameContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new FindTaskCommand object
@@ -27,7 +27,7 @@ public class FindTaskCommandParser implements Parser<FindTaskCommand> {
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
 
-        return new FindTaskCommand(new TaskNameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+        return new FindTaskCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
     }
 
 }

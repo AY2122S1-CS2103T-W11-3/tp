@@ -8,9 +8,9 @@ import manageme.model.link.Link;
 
 public class TypicalLinks {
     public static final Link LINK_A = new LinkBuilder().withAddress("https://www.luminus.com")
-            .withName("Tutorial").withModule("CS2100").build();
+            .withName("Tutorial CS").withModule("CS2100").build();
     public static final Link LINK_B = new LinkBuilder().withAddress("https://www.youtube.com")
-            .withName("Lecture").withModule("CS2103").build();
+            .withName("Lecture CS").withModule("CS2103").build();
 
     private TypicalLinks() {} // prevents instantiation
 

@@ -13,11 +13,11 @@ import manageme.model.task.Task;
 import manageme.ui.UiPart;
 
 /**
- * An UI component that displays information of a {@code Person}.
+ * An UI component that displays information of a day.
  */
 public class DayCard extends UiPart<Region> {
 
-    private static final PseudoClass HAS_TASK = PseudoClass.getPseudoClass("hasTask");
+    private static final PseudoClass HAS_TASK = PseudoClass.getPseudoClass("has");
     private static final PseudoClass IS_SELECTED = PseudoClass.getPseudoClass("selected");
 
     private static final String FXML = "DayCard.fxml";
@@ -31,7 +31,7 @@ public class DayCard extends UiPart<Region> {
      * As a consequence, UI elements' variable names cannot be set to such keywords
      * or an exception will be thrown by JavaFX during runtime.
      *
-     * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
+     * @see <a href="https://github.com/se-edu/ManageMe-level4/issues/336">The issue on ManageMe level 4</a>
      */
 
     @FXML
@@ -39,10 +39,10 @@ public class DayCard extends UiPart<Region> {
     @FXML
     private Label day;
     @FXML
-    private Rectangle hasTask;
+    private Rectangle has;
 
     /**
-     * Creates a {@code PersonCode} with the given {@code Person} and index to display.
+     * Creates a day card with the given date and index to display.
      */
     public DayCard(ObservableList<Task> taskList, LocalDate date, boolean isSelected) {
         super(FXML);
@@ -58,7 +58,7 @@ public class DayCard extends UiPart<Region> {
     private void fillDay() {
         day.setText(String.format("%d", date.getDayOfMonth()));
         if (!taskList.isEmpty()) {
-            hasTask.pseudoClassStateChanged(HAS_TASK, true);
+            has.pseudoClassStateChanged(HAS_TASK, true);
         }
 
         if (isSelected) {

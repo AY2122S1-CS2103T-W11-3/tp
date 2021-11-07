@@ -15,20 +15,20 @@ public class LinkTest {
      * This tests if two Link objects have the same link content
      */
     @Test
-    public void isSameLink() {
+    public void isSame() {
         // same object -> returns true
-        assertTrue(LINK_A.isSameLink(LINK_A));
+        assertTrue(LINK_A.isSame(LINK_A));
 
         // null -> returns false
-        assertFalse(LINK_A.isSameLink(null));
+        assertFalse(LINK_A.isSame(null));
 
         // same link, different name -> returns true
         Link editedLuminus = new LinkBuilder(LINK_A).withName("Lecture").build();
-        assertTrue(LINK_A.isSameLink(editedLuminus));
+        assertTrue(LINK_A.isSame(editedLuminus));
 
         // different link, same name -> returns false
         editedLuminus = new LinkBuilder(LINK_A).withAddress("https://www.youtube.com").build();
-        assertFalse(LINK_A.isSameLink(editedLuminus));
+        assertFalse(LINK_A.isSame(editedLuminus));
     }
 
     /**

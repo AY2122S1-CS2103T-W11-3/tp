@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import manageme.commons.core.index.Index;
 import manageme.logic.commands.module.EditModuleCommand;
-import manageme.model.module.ModuleName;
+import manageme.model.Name;
 import manageme.testutil.EditModuleDescriptorBuilder;
 
 public class EditModuleCommandParserTest {
@@ -54,7 +54,7 @@ public class EditModuleCommandParserTest {
 
     @Test
     public void parse_invalidValue_failure() {
-        assertParseFailure(parser, "1" + INVALID_NAME_DESC, ModuleName.MESSAGE_CONSTRAINTS); // invalid name
+        assertParseFailure(parser, "1" + INVALID_NAME_DESC, Name.MESSAGE_CONSTRAINTS); // invalid name
         // TODO: Test Link inputs when its validation is implemented
     }
 

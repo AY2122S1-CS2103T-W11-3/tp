@@ -7,6 +7,7 @@ title: User Guide
 * Table of Contents
 {:toc}
 
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## <font color="#f0932b">Introduction:</font>
@@ -29,8 +30,10 @@ It should take less than 5 minutes to read and will provide new users with the n
 6. Enjoy using the application!
 
 ### <font color="#f0932b">User Interface</font>
-Below is a screenshot of our User Interface (UI). As you can see, there are management panels for Modules, Tasks, 
-Calendar, and Links which can contain both website links and file paths stored on your computer. You can type command lines in the command input box, and the ManageMe's response will be shown in the app response box.
+
+Below is a screenshot of our User Interface (UI). As you can see, there are management panels for Modules, Tasks,
+Calendar, and Links which can contain both website links and file paths stored on your computer.
+You can type command lines in the command input box, and the ManageMe's response will be shown in the app response box.
 
 ![Ui](images/UiHomepage.png)
 <br>*Homepage of Application*
@@ -263,8 +266,6 @@ Format: `listMod`
 
 Return to [Table of Contents](#table-of-contents).
 
-
-
 ### <font color="#f9ca24">Links:</font>
 #### <font color="#f9ca24">Add a link: `addLink`</font>
 Adds a link into the link list. A link contains its name and a website link for online learning.
@@ -339,7 +340,6 @@ Format: `listLink`
 
 Return to [Table of Contents](#table-of-contents).
 
-
 ### <font color="#eb4d4b">Calendar:</font>
 #### <font color="#eb4d4b">Change calendar to next month: `nextMonth`</font>
 Display the calendar for the next month. This command will
@@ -366,24 +366,17 @@ Example: `readDay 2021-10-19`
 
 Return to [Table of Contents](#table-of-contents).
 
-
-
 ### <font color="#4834d4">Others:</font>
 
 #### <font color="#4834d4">Viewing help: `help`</font>
 
 Shows the command summary and the url to the full User Guide.
-
-![help message](images/helpMessage.png)<br>
-
-Format: `help`
 <br><br>
 
 #### <font color="#4834d4">Archive current data: `archive`</font>
 
 Resets the application data and saves the deleted application data into a timestamped file located in the data folder.
 <br><br>
-
 
 #### <font color="#4834d4">Exiting the program : `exit`</font>
 

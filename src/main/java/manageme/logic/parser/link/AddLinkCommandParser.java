@@ -14,10 +14,10 @@ import manageme.logic.parser.Parser;
 import manageme.logic.parser.ParserUtil;
 import manageme.logic.parser.Prefix;
 import manageme.logic.parser.exceptions.ParseException;
+import manageme.model.Name;
+import manageme.model.TagModule;
 import manageme.model.link.Link;
 import manageme.model.link.LinkAddress;
-import manageme.model.link.LinkModule;
-import manageme.model.link.LinkName;
 
 /**
  * Parses input arguments and creates a new AddCommand object
@@ -39,11 +39,11 @@ public class AddLinkCommandParser implements Parser<AddLinkCommand> {
                     AddLinkCommand.MESSAGE_USAGE));
         }
 
-        LinkName name = ParserUtil.parseLinkName(argMultimap.getValue(PREFIX_NAME).get());
+        Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         LinkAddress address = ParserUtil.parseLinkAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
-        LinkModule module = argMultimap.getValue(PREFIX_MODULE).isPresent()
+        TagModule module = argMultimap.getValue(PREFIX_MODULE).isPresent()
                 ? ParserUtil.parseLinkModule(argMultimap.getValue(PREFIX_MODULE).get())
-                : LinkModule.empty();
+                : manageme.model.TagModule.empty();
 
         Link link = new Link(name, address, module);
 

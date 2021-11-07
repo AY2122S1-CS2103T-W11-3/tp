@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import manageme.commons.exceptions.IllegalValueException;
-import manageme.model.task.TaskName;
+import manageme.model.Name;
 import manageme.testutil.Assert;
 import manageme.testutil.TypicalTasks;
 
@@ -20,7 +20,7 @@ public class JsonAdaptedTaskTest {
     private static final String VALID_NAME = TypicalTasks.TASK_A.getName().toString();
     private static final String VALID_DESCRIPTION = TypicalTasks.TASK_A.getDescription().toString();
     private static final String VALID_ISDONE = TypicalTasks.TASK_A.isDone().toString();
-    private static final String VALID_MODULE = TypicalTasks.TASK_A.getTaskModule().toString();
+    private static final String VALID_MODULE = TypicalTasks.TASK_A.getTagModule().toString();
     private static final String VALID_START = TypicalTasks.TASK_A.getStart().toString();
     private static final String VALID_END = TypicalTasks.TASK_A.getEnd().toString();
     //private static final List<JsonAdaptedTag> VALID_END = TASK_A.getEnd().stream()
@@ -38,7 +38,7 @@ public class JsonAdaptedTaskTest {
         JsonAdaptedTask task =
                 new JsonAdaptedTask(INVALID_NAME, VALID_DESCRIPTION, VALID_ISDONE, VALID_MODULE, VALID_START,
                         VALID_END);
-        String expectedMessage = TaskName.MESSAGE_CONSTRAINTS;
+        String expectedMessage = Name.MESSAGE_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, task::toModelType);
     }
 
@@ -46,7 +46,7 @@ public class JsonAdaptedTaskTest {
     public void toModelType_nullName_throwsIllegalValueException() {
         JsonAdaptedTask task = new JsonAdaptedTask(null, VALID_DESCRIPTION, VALID_ISDONE, VALID_MODULE,
                 VALID_START, VALID_END);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, TaskName.class.getSimpleName());
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, task::toModelType);
     }
 

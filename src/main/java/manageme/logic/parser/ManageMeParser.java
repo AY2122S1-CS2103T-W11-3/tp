@@ -14,7 +14,6 @@ import manageme.logic.commands.calendar.PreviousMonthCommand;
 import manageme.logic.commands.calendar.ReadDayCommand;
 import manageme.logic.commands.link.AddLinkCommand;
 import manageme.logic.commands.link.DeleteLinkCommand;
-import manageme.logic.commands.link.DeleteModLinkCommand;
 import manageme.logic.commands.link.EditLinkCommand;
 import manageme.logic.commands.link.FindLinkCommand;
 import manageme.logic.commands.link.ListLinkCommand;
@@ -36,7 +35,6 @@ import manageme.logic.parser.calendar.ReadDayCommandParser;
 import manageme.logic.parser.exceptions.ParseException;
 import manageme.logic.parser.link.AddLinkCommandParser;
 import manageme.logic.parser.link.DeleteLinkCommandParser;
-import manageme.logic.parser.link.DeleteModLinkCommandParser;
 import manageme.logic.parser.link.EditLinkCommandParser;
 import manageme.logic.parser.link.FindLinkCommandParser;
 import manageme.logic.parser.link.OpenLinkCommandParser;
@@ -86,9 +84,6 @@ public class ManageMeParser {
 
         case DeleteLinkCommand.COMMAND_WORD:
             return new DeleteLinkCommandParser().parse(arguments);
-
-        case DeleteModLinkCommand.COMMAND_WORD:
-            return new DeleteModLinkCommandParser().parse(arguments);
 
         case FindLinkCommand.COMMAND_WORD:
             return new FindLinkCommandParser().parse(arguments);

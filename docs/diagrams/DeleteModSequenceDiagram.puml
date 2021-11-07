@@ -1,0 +1,75 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":ManageMeParser" as ManageMeParser LOGIC_COLOR
+participant ":DeleteModuleCommandParser" as DeleteModuleCommandParser LOGIC_COLOR
+participant "d:DeleteModuleCommand" as DeleteModuleCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("deleteMod 1")
+activate LogicManager
+
+LogicManager -> ManageMeParser : parseCommand("deleteMod 1")
+activate ManageMeParser
+
+create DeleteModuleCommandParser
+ManageMeParser -> DeleteModuleCommandParser
+activate DeleteModuleCommandParser
+
+DeleteModuleCommandParser --> ManageMeParser
+deactivate DeleteModuleCommandParser
+
+ManageMeParser -> DeleteModuleCommandParser : parse("1")
+activate DeleteModuleCommandParser
+
+create DeleteModuleCommand
+DeleteModuleCommandParser -> DeleteModuleCommand
+activate DeleteModuleCommand
+
+DeleteModuleCommand --> DeleteModuleCommandParser : d
+deactivate DeleteModuleCommand
+
+DeleteModuleCommandParser --> ManageMeParser : d
+deactivate DeleteModuleCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+DeleteModuleCommandParser -[hidden]-> ManageMeParser
+destroy DeleteModuleCommandParser
+
+ManageMeParser --> LogicManager : d
+deactivate ManageMeParser
+
+LogicManager -> DeleteModuleCommand : execute(model)
+activate DeleteModuleCommand
+
+DeleteModuleCommand -> Model : getFilteredModuleList()
+activate Model
+
+Model --> DeleteModuleCommand :lastShownList()
+deactivate Model
+
+DeleteModuleCommand -> Model : deleteModule(module)
+activate Model
+
+Model --> DeleteModuleCommand
+deactivate Model
+
+create CommandResult
+DeleteModuleCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> DeleteModuleCommand : result
+deactivate CommandResult
+
+DeleteModuleCommand --> LogicManager : result
+deactivate DeleteModuleCommand
+
+[<--LogicManager : result
+deactivate LogicManager
+@enduml

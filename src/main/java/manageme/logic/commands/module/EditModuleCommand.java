@@ -14,8 +14,9 @@ import manageme.logic.commands.Command;
 import manageme.logic.commands.CommandResult;
 import manageme.logic.commands.exceptions.CommandException;
 import manageme.model.Model;
+import manageme.model.Name;
+import manageme.model.TagModule;
 import manageme.model.module.Module;
-import manageme.model.module.ModuleName;
 
 /**
  * Edits the details of an existing module in the app.
@@ -60,11 +61,13 @@ public class EditModuleCommand extends Command {
         Module moduleToEdit = lastShownList.get(index.getZeroBased());
         Module editedModule = createEditedModule(moduleToEdit, editModuleDescriptor);
 
-        if (!moduleToEdit.isSameModule(editedModule) && model.hasModule(editedModule)) {
+        if (!moduleToEdit.isSame(editedModule) && model.has(editedModule)) {
             throw new CommandException(MESSAGE_DUPLICATE_MODULE);
         }
 
-        model.setModule(moduleToEdit, editedModule);
+        model.editModuleInTasksWithModule(moduleToEdit, new manageme.model.TagModule(editedModule.getName().value));
+        model.editModuleInLinksWithModule(moduleToEdit, new TagModule(editedModule.getName().value));
+        model.set(moduleToEdit, editedModule);
         model.updateFilteredModuleList(PREDICATE_SHOW_ALL_MODULES);
         return new CommandResult(String.format(MESSAGE_EDIT_MODULE_SUCCESS, editedModule));
     }
@@ -75,7 +78,7 @@ public class EditModuleCommand extends Command {
      */
     private static Module createEditedModule(Module moduleToEdit, EditModuleDescriptor editModuleDescriptor) {
 
-        ModuleName updatedName = editModuleDescriptor.getModuleName().orElse(moduleToEdit.getModuleName());
+        Name updatedName = editModuleDescriptor.getName().orElse(moduleToEdit.getName());
 
         return new Module(updatedName);
     }
@@ -103,7 +106,7 @@ public class EditModuleCommand extends Command {
      * corresponding field value of the module.
      */
     public static class EditModuleDescriptor {
-        private ModuleName moduleName;
+        private Name name;
 
         public EditModuleDescriptor() {}
 
@@ -112,22 +115,22 @@ public class EditModuleCommand extends Command {
          * A defensive copy of {@code tags} is used internally.
          */
         public EditModuleDescriptor(EditModuleDescriptor toCopy) {
-            setModuleName(toCopy.moduleName);
+            setName(toCopy.name);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(moduleName);
+            return CollectionUtil.isAnyNonNull(name);
         }
 
-        public void setModuleName(ModuleName moduleName) {
-            this.moduleName = moduleName;
+        public void setName(Name name) {
+            this.name = name;
         }
 
-        public Optional<ModuleName> getModuleName() {
-            return Optional.ofNullable(moduleName);
+        public Optional<Name> getName() {
+            return Optional.ofNullable(name);
         }
 
         @Override
@@ -145,7 +148,7 @@ public class EditModuleCommand extends Command {
             // state check
             EditModuleDescriptor e = (EditModuleDescriptor) other;
 
-            return getModuleName().equals(e.getModuleName());
+            return getName().equals(e.getName());
         }
     }
 }

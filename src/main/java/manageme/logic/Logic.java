@@ -28,7 +28,7 @@ public interface Logic {
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
     /**
-     * Returns the AddressBook.
+     * Returns the ManageMe.
      *
      * @see Model#getManageMe()
      */

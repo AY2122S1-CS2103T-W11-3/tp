@@ -6,7 +6,7 @@ import manageme.commons.core.Messages;
 import manageme.logic.commands.Command;
 import manageme.logic.commands.CommandResult;
 import manageme.model.Model;
-import manageme.model.link.LinkNameContainsKeywordsPredicate;
+import manageme.model.NameContainsKeywordsPredicate;
 
 public class FindLinkCommand extends Command {
     public static final String COMMAND_WORD = "findLink";
@@ -16,9 +16,9 @@ public class FindLinkCommand extends Command {
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + "computer";
 
-    private final LinkNameContainsKeywordsPredicate predicate;
+    private final NameContainsKeywordsPredicate predicate;
 
-    public FindLinkCommand(LinkNameContainsKeywordsPredicate predicate) {
+    public FindLinkCommand(NameContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
 

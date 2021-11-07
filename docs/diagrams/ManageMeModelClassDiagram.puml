@@ -18,18 +18,18 @@ Class ReadOnlyUserPrefs
 
 Class UniqueTaskList
 Class Task
-Class TaskModule
-Class TaskName
+Class TagModule
+Class Name
 Class TaskDescription
 Class TaskTime
 
 Class UniqueModuleList
 Class Module
-Class ModuleName
+Class Name
 
 Class UniqueLinkList
 Class Link
-Class LinkName
+Class Name
 Class LinkAddress
 }
 
@@ -47,23 +47,23 @@ UserPrefs .up.|> ReadOnlyUserPrefs
 
 ManageMe *--> "1" UniqueTaskList
 UniqueTaskList --> "~* all" Task
-Task *--> TaskName
+Task *--> Name
 Task *--> TaskDescription
-Task *--> TaskModule
+Task *--> TagModule
 Task *--> "2" TaskTime
 Task --> UniqueLinkList
 
-TaskName -[hidden]right-> TaskDescription
-TaskDescription -[hidden]right-> TaskModule
+Name -[hidden]right-> TaskDescription
+TaskDescription -[hidden]right-> TagModule
 
 ModelManager -->"~* filtered" Task
 
 ManageMe *--> "1" UniqueModuleList
 UniqueModuleList --> "~* all" Module
-Module *--> ModuleName
+Module *--> Name
 Module --> UniqueLinkList
 UniqueLinkList -->"*" Link
-Link *--> LinkName
+Link *--> Name
 Link *--> LinkAddress
 
 ModelManager -->"~* filtered" Module

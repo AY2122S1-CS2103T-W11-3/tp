@@ -10,6 +10,7 @@ import manageme.logic.commands.Command;
 import manageme.logic.commands.CommandResult;
 import manageme.logic.commands.exceptions.CommandException;
 import manageme.model.Model;
+import manageme.model.TagModule;
 import manageme.model.module.Module;
 
 /**
@@ -41,7 +42,11 @@ public class DeleteModuleCommand extends Command {
         }
 
         Module moduleToDelete = lastShownList.get(targetIndex.getZeroBased());
-        model.deleteModule(moduleToDelete);
+
+        model.editModuleInTasksWithModule(moduleToDelete, TagModule.empty());
+        model.editModuleInLinksWithModule(moduleToDelete, TagModule.empty());
+        model.delete(moduleToDelete);
+
         return new CommandResult(String.format(MESSAGE_DELETE_MODULE_SUCCESS, moduleToDelete));
     }
 

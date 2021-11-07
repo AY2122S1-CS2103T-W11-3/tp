@@ -1,10 +1,10 @@
 package manageme.testutil;
 
+import manageme.model.Name;
+import manageme.model.TagModule;
 import manageme.model.task.Task;
 import manageme.model.task.TaskDescription;
 import manageme.model.task.TaskIsDone;
-import manageme.model.task.TaskModule;
-import manageme.model.task.TaskName;
 import manageme.model.task.TaskTime;
 
 /**
@@ -19,10 +19,10 @@ public class TaskBuilder {
     public static final String DEFAULT_STARTDATETIME = "2021-10-05T11:00";
     public static final String DEFAULT_ENDDATETIME = "2021-10-12T23:59";
 
-    private TaskName name;
+    private Name name;
     private TaskDescription description;
     private TaskIsDone isDone;
-    private TaskModule module;
+    private TagModule module;
     private TaskTime start;
     private TaskTime end;
 
@@ -30,10 +30,10 @@ public class TaskBuilder {
      * Creates a {@code TaskBuilder} with the default details.
      */
     public TaskBuilder() {
-        name = new TaskName(DEFAULT_NAME);
+        name = new Name(DEFAULT_NAME);
         description = new TaskDescription(DEFAULT_DESCRIPTION);
         isDone = new TaskIsDone(DEFAULT_ISDONE);
-        module = new TaskModule();
+        module = new TagModule();
         start = new TaskTime(DEFAULT_STARTDATETIME);
         end = new TaskTime(DEFAULT_ENDDATETIME);
     }
@@ -45,7 +45,7 @@ public class TaskBuilder {
         name = taskToCopy.getName();
         description = taskToCopy.getDescription();
         isDone = taskToCopy.isDone();
-        module = taskToCopy.getTaskModule();
+        module = taskToCopy.getTagModule();
         start = taskToCopy.getStart();
         end = taskToCopy.getEnd();
     }
@@ -54,7 +54,7 @@ public class TaskBuilder {
      * Sets the {@code name} of the {@code Task} that we are building.
      */
     public TaskBuilder withName(String name) {
-        this.name = new TaskName(name);
+        this.name = new Name(name);
         return this;
     }
 
@@ -69,8 +69,8 @@ public class TaskBuilder {
     /**
      * Sets the {@code module} of the {@code Task} that we are building.
      */
-    public TaskBuilder withModule(String taskModule) {
-        this.module = taskModule.equals("") ? TaskModule.empty() : new TaskModule(taskModule);
+    public TaskBuilder withModule(String tagModule) {
+        this.module = tagModule.equals("") ? TagModule.empty() : new TagModule(tagModule);
         return this;
     }
     /**
@@ -102,4 +102,3 @@ public class TaskBuilder {
     }
 
 }
-

@@ -63,26 +63,26 @@ class JsonSerializableManageMe {
         ManageMe manageMe = new ManageMe();
         for (JsonAdaptedLink jsonAdaptedLink : links) {
             Link link = jsonAdaptedLink.toModelType();
-            if (manageMe.hasLink(link)) {
+            if (manageMe.has(link)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_LINK);
             }
-            manageMe.addLink(link);
+            manageMe.add(link);
         }
 
         for (JsonAdaptedModule jsonAdaptedModule: modules) {
             Module module = jsonAdaptedModule.toModelType();
-            if (manageMe.hasModule(module)) {
+            if (manageMe.has(module)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_MODULE);
             }
-            manageMe.addModule(module);
+            manageMe.add(module);
         }
 
         for (JsonAdaptedTask jsonAdaptedTask: tasks) {
             Task task = jsonAdaptedTask.toModelType();
-            if (manageMe.hasTask(task)) {
+            if (manageMe.has(task)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_TASK);
             }
-            manageMe.addTask(task);
+            manageMe.add(task);
         }
         return manageMe;
     }

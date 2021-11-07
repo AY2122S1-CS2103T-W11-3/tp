@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import manageme.commons.core.index.Index;
 import manageme.logic.commands.task.EditTaskCommand;
 import manageme.logic.commands.task.TaskCommandTestUtil;
-import manageme.model.task.TaskName;
+import manageme.model.Name;
 import manageme.testutil.EditTaskDescriptorBuilder;
 
 
@@ -51,17 +51,17 @@ public class EditTaskCommandParserTest {
 
     @Test
     public void parse_invalidValue_failure() {
-        assertParseFailure(parser, "1" + TaskCommandTestUtil.INVALID_NAME_DESC, TaskName.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "1" + TaskCommandTestUtil.INVALID_NAME_DESC, Name.MESSAGE_CONSTRAINTS);
 
 
         // valid name followed by invalid name. The test case for invalid name followed by valid name
         // is tested at {@code parse_invalidValueFollowedByValidValue_success()}
         assertParseFailure(parser, "1" + TaskCommandTestUtil.NAME_DESC_B
-                + TaskCommandTestUtil.INVALID_NAME_DESC, TaskName.MESSAGE_CONSTRAINTS);
+                + TaskCommandTestUtil.INVALID_NAME_DESC, Name.MESSAGE_CONSTRAINTS);
         // multiple invalid values, but only the first invalid value is captured
         assertParseFailure(parser, "1" + TaskCommandTestUtil.INVALID_NAME_DESC
                 + TaskCommandTestUtil.DESCRIPTION_DESC_A + TaskCommandTestUtil.MODULE_DESC_A,
-                TaskName.MESSAGE_CONSTRAINTS);
+                Name.MESSAGE_CONSTRAINTS);
     }
 
     @Test

@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import manageme.commons.exceptions.IllegalValueException;
+import manageme.model.Name;
 import manageme.model.module.Module;
-import manageme.model.module.ModuleName;
 
 /**
  * Jackson-friendly version of {@link Module}.
@@ -14,21 +14,21 @@ import manageme.model.module.ModuleName;
 public class JsonAdaptedModule {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Module's %s field is missing!";
 
-    private final String modName;
+    private final String name;
 
     /**
      * Constructs a {@code JsonAdaptedModule} with the given details.
      */
     @JsonCreator
-    public JsonAdaptedModule(@JsonProperty("modName") String modName) {
-        this.modName = modName;
+    public JsonAdaptedModule(@JsonProperty("Name") String name) {
+        this.name = name;
     }
 
     /**
      * Converts a given {@code Module} into this class for Jackson use.
      */
     public JsonAdaptedModule(Module source) {
-        modName = source.getModuleName().value;
+        name = source.getName().value;
     }
 
     /**
@@ -38,13 +38,13 @@ public class JsonAdaptedModule {
      */
     public Module toModelType() throws IllegalValueException {
 
-        if (modName == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "modName"));
+        if (name == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "name"));
         }
-        if (!ModuleName.isValidModuleName(modName)) {
-            throw new IllegalValueException(ModuleName.MESSAGE_CONSTRAINTS);
+        if (!Name.isValidName(name)) {
+            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
         }
-        final ModuleName modelName = new ModuleName(modName);
+        final Name modelName = new Name(name);
 
         return new Module(modelName);
     }

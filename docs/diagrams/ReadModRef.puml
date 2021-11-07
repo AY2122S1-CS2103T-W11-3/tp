@@ -1,0 +1,27 @@
+@startuml
+!include style.puml
+
+mainframe sd display module window
+
+
+box UI UI_COLOR_T1
+participant ":ModuleWindow" as ModuleWindow UI_COLOR
+participant ":MmMainWindow" as MmMainWindow UI_COLOR
+end box
+activate MmMainWindow
+
+
+opt result.isReadModule
+  MmMainWindow -> MmMainWindow : handleModule()
+  activate MmMainWindow
+  MmMainWindow -> ModuleWindow : display()
+  deactivate MmMainWindow
+  activate ModuleWindow
+  deactivate MmMainWindow
+  ModuleWindow -> ModuleWindow : showAndWait()
+  activate ModuleWindow
+  deactivate ModuleWindow
+  deactivate ModuleWindow
+end
+
+@enduml

@@ -12,8 +12,8 @@ import manageme.model.link.Link;
 import manageme.model.module.Module;
 import manageme.model.task.Task;
 import manageme.ui.UiPart;
-import manageme.ui.link.LinkCard;
-import manageme.ui.task.TaskCard;
+import manageme.ui.link.LinkListPanel;
+import manageme.ui.task.TaskListPanel;
 
 public class ModuleWindow extends UiPart<Stage> {
     private static final String FXML = "ModuleWindow.fxml";
@@ -56,10 +56,12 @@ public class ModuleWindow extends UiPart<Stage> {
                         ObservableList<Task> unfilteredTaskList) {
         this.module = optionalModule.get();
         resetWindow();
-        moduleWindow.setTitle(module.getModuleName().value);
-        name.setText(module.getModuleName().value);
+        moduleWindow.setTitle(module.getName().value);
+        name.setText(module.getName().value);
         fillLinkList(module, unfilteredLinkList);
         fillTaskList(module, unfilteredTaskList);
+        moduleWindow.setResizable(false);
+
         moduleWindow.showAndWait();
     }
 
@@ -76,18 +78,16 @@ public class ModuleWindow extends UiPart<Stage> {
      */
     public void fillTaskList(Module module, ObservableList<Task> unfilteredTaskList) {
         FilteredList<Task> tasks = unfilteredTaskList.filtered(task -> {
-            Optional<String> taskModule = task.getTaskModule().moduleName;
+            Optional<String> tagModule = task.getTagModule().name;
 
-            if (taskModule.isEmpty()) {
+            if (tagModule.isEmpty()) {
                 return false;
             }
 
-            return module.getModuleName().value.equals(taskModule.get());
+            return module.getName().value.equals(tagModule.get());
         });
 
-        for (int i = 0; i < tasks.size(); i++) {
-            readTaskList.getChildren().add(new TaskCard(tasks.get(i), i + 1).getRoot());
-        }
+        readTaskList.getChildren().add(new TaskListPanel(tasks).getRoot());
     }
 
     /**
@@ -95,17 +95,15 @@ public class ModuleWindow extends UiPart<Stage> {
      */
     public void fillLinkList(Module module, ObservableList<Link> unfilteredLinkList) {
         FilteredList<Link> links = unfilteredLinkList.filtered(link -> {
-            Optional<String> linkModule = link.getLinkModule().moduleName;
+            Optional<String> linkModule = link.getLinkModule().name;
 
             if (linkModule.isEmpty()) {
                 return false;
             }
 
-            return module.getModuleName().value.equals(linkModule.get());
+            return module.getName().value.equals(linkModule.get());
         });
 
-        for (int i = 0; i < links.size(); i++) {
-            readLinkList.getChildren().add(new LinkCard(links.get(i), i + 1).getRoot());
-        }
+        readLinkList.getChildren().add(new LinkListPanel(links).getRoot());
     }
 }

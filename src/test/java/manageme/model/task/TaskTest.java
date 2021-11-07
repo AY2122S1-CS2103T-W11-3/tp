@@ -22,7 +22,7 @@ public class TaskTest {
 
     @Test
     public void constructor_withoutTaskIsDone_returnsTaskNotDone() {
-        assertFalse(new Task(TASK_A.getName(), TASK_A.getDescription(), TASK_A.getTaskModule(),
+        assertFalse(new Task(TASK_A.getName(), TASK_A.getDescription(), TASK_A.getTagModule(),
                 TASK_A.getStart(), TASK_A.getEnd()).isDone().value);
     }
 
@@ -44,32 +44,32 @@ public class TaskTest {
     }
 
     @Test
-    public void isSameTask() {
+    public void isSame() {
         // same object -> returns true
-        assertTrue(TASK_A.isSameTask(TASK_A));
+        assertTrue(TASK_A.isSame(TASK_A));
 
         // null -> returns false
-        assertFalse(TASK_A.isSameTask(null));
+        assertFalse(TASK_A.isSame(null));
 
         // same name, all other attributes different -> returns true
         Task editedA = new TaskBuilder(TASK_A).withDescription(TaskCommandTestUtil.VALID_DESCRIPTION_B).withModule(
                         TaskCommandTestUtil.VALID_MODULE_B)
                 .withStartDateTime(TaskCommandTestUtil.VALID_START_B).withEndDateTime(TaskCommandTestUtil.VALID_END_B)
                 .build();
-        assertTrue(TASK_A.isSameTask(editedA));
+        assertTrue(TASK_A.isSame(editedA));
 
         // different name, all other attributes same -> returns false
         editedA = new TaskBuilder(TASK_A).withName(TaskCommandTestUtil.VALID_NAME_B).build();
-        assertFalse(TASK_A.isSameTask(editedA));
+        assertFalse(TASK_A.isSame(editedA));
 
         // name differs in case, all other attributes same -> returns false
         Task editedB = new TaskBuilder(TASK_B).withName(TaskCommandTestUtil.VALID_NAME_B.toLowerCase()).build();
-        assertFalse(TASK_B.isSameTask(editedB));
+        assertFalse(TASK_B.isSame(editedB));
 
         // name has trailing spaces, all other attributes same -> returns false
         String nameWithTrailingSpaces = TaskCommandTestUtil.VALID_NAME_B + " ";
         editedB = new TaskBuilder(TASK_B).withName(nameWithTrailingSpaces).build();
-        assertFalse(TASK_B.isSameTask(editedB));
+        assertFalse(TASK_B.isSame(editedB));
     }
     @Test
     public void equals() {

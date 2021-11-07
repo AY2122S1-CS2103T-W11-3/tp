@@ -25,7 +25,7 @@ public class TaskCard extends UiPart<Region> {
      * As a consequence, UI elements' variable names cannot be set to such keywords
      * or an exception will be thrown by JavaFX during runtime.
      *
-     * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
+     * @see <a href="https://github.com/se-edu/ManageMe-level4/issues/336">The issue on ManageMe level 4</a>
      */
 
     public final Task task;
@@ -34,13 +34,13 @@ public class TaskCard extends UiPart<Region> {
     @FXML
     private VBox taskCardPane;
     @FXML
-    private Label taskName;
+    private Label name;
     @FXML
     private Label taskId;
     @FXML
     private Label taskDescription;
     @FXML
-    private Label taskModule;
+    private Label tagModule;
     @FXML
     private Label startTime;
     @FXML
@@ -65,9 +65,9 @@ public class TaskCard extends UiPart<Region> {
 
     private void init(int displayedIndex) {
         taskId.setText(displayedIndex + ". ");
-        taskName.setText(task.getName().value);
+        name.setText(task.getName().value);
         taskDescription.setText(task.getDescription().value);
-        taskModule.setText(task.getTaskModule().value);
+        tagModule.setText(task.getTagModule().value);
         startTime.setText(task.getStart().isEmpty() ? "" : "Start: " + task.getStart().toDisplayString());
         endTime.setText(task.getEnd().isEmpty() ? "" : "End: " + task.getEnd().toDisplayString());
 

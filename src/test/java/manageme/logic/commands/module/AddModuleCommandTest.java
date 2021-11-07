@@ -18,17 +18,17 @@ import org.junit.jupiter.api.Test;
 
 import javafx.collections.ObservableList;
 import manageme.commons.core.GuiSettings;
-import manageme.commons.core.index.Index;
 import manageme.logic.commands.CommandResult;
 import manageme.logic.commands.exceptions.CommandException;
 import manageme.model.ManageMe;
+import manageme.model.ManageMeObject;
 import manageme.model.Model;
+import manageme.model.Name;
 import manageme.model.ReadOnlyManageMe;
 import manageme.model.ReadOnlyUserPrefs;
+import manageme.model.TagModule;
 import manageme.model.link.Link;
-import manageme.model.link.LinkModule;
 import manageme.model.module.Module;
-import manageme.model.module.ModuleName;
 import manageme.model.task.Task;
 import manageme.testutil.ModuleBuilder;
 
@@ -41,10 +41,10 @@ public class AddModuleCommandTest {
     @Test
     public void execute_moduleAcceptedByModel_addSuccessful() throws Exception {
         ModelStubAcceptingModuleAdded modelStub = new ModelStubAcceptingModuleAdded();
-        ModuleName validModuleName = new ModuleName(VALID_MODNAME_A);
+        Name validName = new Name(VALID_MODNAME_A);
         Module validModule = new ModuleBuilder().withName(VALID_MODNAME_A).build();
 
-        CommandResult commandResult = new AddModuleCommand(validModuleName).execute(modelStub);
+        CommandResult commandResult = new AddModuleCommand(validName).execute(modelStub);
 
         assertEquals(String.format(AddModuleCommand.MESSAGE_SUCCESS, validModule), commandResult.getFeedbackToUser());
         assertEquals(Arrays.asList(validModule), modelStub.modulesAdded);
@@ -52,9 +52,9 @@ public class AddModuleCommandTest {
 
     @Test
     public void execute_duplicateModule_throwsCommandException() {
-        ModuleName validModuleName = new ModuleName(VALID_MODNAME_A);
+        Name validName = new Name(VALID_MODNAME_A);
         Module validModule = new ModuleBuilder().withName(VALID_MODNAME_A).build();
-        AddModuleCommand addCommand = new AddModuleCommand(validModuleName);
+        AddModuleCommand addCommand = new AddModuleCommand(validName);
         ModelStub modelStub = new AddModuleCommandTest.ModelStubWithModule(validModule);
 
         assertThrows(CommandException.class, AddModuleCommand.MESSAGE_DUPLICATE_MODULE, () ->
@@ -63,8 +63,8 @@ public class AddModuleCommandTest {
 
     @Test
     public void equals() {
-        ModuleName cs2100 = new ModuleName(VALID_MODNAME_A);
-        ModuleName cs2103 = new ModuleName(VALID_MODNAME_B);
+        Name cs2100 = new Name(VALID_MODNAME_A);
+        Name cs2103 = new Name(VALID_MODNAME_B);
         AddModuleCommand addCs2100Command = new AddModuleCommand(cs2100);
         AddModuleCommand addCs2103Command = new AddModuleCommand(cs2103);
 
@@ -115,12 +115,7 @@ public class AddModuleCommandTest {
         }
 
         @Override
-        public void setManageMeFilePath(Path addressBookFilePath) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void addLink(Link link) {
+        public void setManageMeFilePath(Path manageMeFilePath) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -135,27 +130,32 @@ public class AddModuleCommandTest {
         }
 
         @Override
-        public boolean hasLink(Link link) {
+        public <T extends ManageMeObject> boolean has(T target) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void deleteLink(Link target) {
+        public <T extends ManageMeObject> void delete(T target) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void setLink(Link target, Link editedLink) {
+        public <T extends ManageMeObject> void set(T target, T edited) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public <T extends ManageMeObject> void add(T target) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void editModuleInLinksWithModule(Module target, TagModule newTagModule) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public void openLink(Link target) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public Link deleteModLink(LinkModule linkModule, Index index) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -166,26 +166,6 @@ public class AddModuleCommandTest {
 
         @Override
         public void updateFilteredLinkList(Predicate<Link> predicate) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public boolean hasModule(Module module) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void deleteModule(Module target) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void addModule(Module module) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setModule(Module target, Module editedModule) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -210,22 +190,7 @@ public class AddModuleCommandTest {
         }
 
         @Override
-        public boolean hasTask(Task task) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void deleteTask(Task target) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void addTask(Task task) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setTask(Task target, Task editedTask) {
+        public void editModuleInTasksWithModule(Module target, manageme.model.TagModule newTagModule) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -262,9 +227,9 @@ public class AddModuleCommandTest {
         }
 
         @Override
-        public boolean hasModule(Module module) {
+        public <T extends ManageMeObject> boolean has(T module) {
             requireNonNull(module);
-            return this.module.isSameModule(module);
+            return this.module.isSame(module);
         }
     }
 
@@ -275,15 +240,14 @@ public class AddModuleCommandTest {
         final ArrayList<Module> modulesAdded = new ArrayList<>();
 
         @Override
-        public boolean hasModule(Module module) {
+        public <T extends ManageMeObject> boolean has(T module) {
             requireNonNull(module);
-            return modulesAdded.stream().anyMatch(module::isSameModule);
+            return modulesAdded.stream().anyMatch(module::isSame);
         }
 
-        @Override
-        public void addModule(Module module) {
+        public <T extends ManageMeObject> void add(T module) {
             requireNonNull(module);
-            modulesAdded.add(module);
+            modulesAdded.add((Module) module);
         }
 
         @Override

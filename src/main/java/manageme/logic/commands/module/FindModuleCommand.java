@@ -6,7 +6,8 @@ import manageme.commons.core.Messages;
 import manageme.logic.commands.Command;
 import manageme.logic.commands.CommandResult;
 import manageme.model.Model;
-import manageme.model.module.ModNameContainsKeywordsPredicate;
+import manageme.model.NameContainsKeywordsPredicate;
+
 /**
  * Finds and lists all mods in app whose name contains any of the argument keywords.
  * Keyword matching is case insensitive.
@@ -21,9 +22,9 @@ public class FindModuleCommand extends Command {
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + "computer";
 
-    private final ModNameContainsKeywordsPredicate predicate;
+    private final NameContainsKeywordsPredicate predicate;
 
-    public FindModuleCommand(ModNameContainsKeywordsPredicate predicate) {
+    public FindModuleCommand(NameContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
 
@@ -42,4 +43,3 @@ public class FindModuleCommand extends Command {
                 && predicate.equals(((FindModuleCommand) other).predicate)); // state check
     }
 }
-

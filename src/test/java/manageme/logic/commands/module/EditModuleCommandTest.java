@@ -40,7 +40,7 @@ public class EditModuleCommandTest {
         String expectedMessage = String.format(EditModuleCommand.MESSAGE_EDIT_MODULE_SUCCESS, editedModule);
 
         Model expectedModel = new ModelManager(new ManageMe(model.getManageMe()), new UserPrefs());
-        expectedModel.setModule(model.getFilteredModuleList().get(0), editedModule);
+        expectedModel.set(model.getFilteredModuleList().get(0), editedModule);
 
         assertCommandSuccess(editModuleCommand, model, expectedMessage, expectedModel);
     }
@@ -59,7 +59,7 @@ public class EditModuleCommandTest {
         String expectedMessage = String.format(EditModuleCommand.MESSAGE_EDIT_MODULE_SUCCESS, editedModule);
 
         Model expectedModel = new ModelManager(new ManageMe(model.getManageMe()), new UserPrefs());
-        expectedModel.setModule(lastModule, editedModule);
+        expectedModel.set(lastModule, editedModule);
 
         assertCommandSuccess(editModuleCommand, model, expectedMessage, expectedModel);
     }
@@ -88,7 +88,7 @@ public class EditModuleCommandTest {
         String expectedMessage = String.format(EditModuleCommand.MESSAGE_EDIT_MODULE_SUCCESS, editedModule);
 
         Model expectedModel = new ModelManager(new ManageMe(model.getManageMe()), new UserPrefs());
-        expectedModel.setModule(model.getFilteredModuleList().get(0), editedModule);
+        expectedModel.set(model.getFilteredModuleList().get(0), editedModule);
 
         assertCommandSuccess(editModuleCommand, model, expectedMessage, expectedModel);
     }

@@ -13,7 +13,7 @@ import manageme.model.UserPrefs;
 public class ClearCommandTest {
 
     @Test
-    public void execute_emptyAddressBook_success() {
+    public void execute_emptyManageMe_success() {
         Model model = new ModelManager();
         Model expectedModel = new ModelManager();
 
@@ -21,7 +21,7 @@ public class ClearCommandTest {
     }
 
     @Test
-    public void execute_nonEmptyAddressBook_success() {
+    public void execute_nonEmptyManageMe_success() {
         Model model = new ModelManager(getTypicalManageMe(), new UserPrefs());
         Model expectedModel = new ModelManager(getTypicalManageMe(), new UserPrefs());
         expectedModel.setManageMe(new ManageMe());

@@ -14,6 +14,7 @@ import manageme.commons.core.Messages;
 import manageme.commons.core.index.Index;
 import manageme.model.Model;
 import manageme.model.ModelManager;
+import manageme.model.TagModule;
 import manageme.model.UserPrefs;
 import manageme.model.module.Module;
 
@@ -28,7 +29,9 @@ public class DeleteModuleCommandTest {
         String expectedMessage = String.format(DeleteModuleCommand.MESSAGE_DELETE_MODULE_SUCCESS, moduleToDelete);
 
         ModelManager expectedModel = new ModelManager(model.getManageMe(), new UserPrefs());
-        expectedModel.deleteModule(moduleToDelete);
+        expectedModel.delete(moduleToDelete);
+        expectedModel.editModuleInTasksWithModule(moduleToDelete, TagModule.empty());
+        expectedModel.editModuleInLinksWithModule(moduleToDelete, manageme.model.TagModule.empty());
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }

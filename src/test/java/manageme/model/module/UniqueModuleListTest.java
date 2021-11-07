@@ -55,53 +55,53 @@ public class UniqueModuleListTest {
     }
 
     @Test
-    public void setModule_nullTargetModule_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> uniqueModuleList.setModule(null, MODULE_A));
+    public void setT_nullTargetModule_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> uniqueModuleList.setT(null, MODULE_A));
     }
 
     @Test
-    public void setModule_nullEditedModule_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> uniqueModuleList.setModule(MODULE_A, null));
+    public void setT_nullEditedModule_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> uniqueModuleList.setT(MODULE_A, null));
     }
 
     @Test
-    public void setModule_targetModuleNotInList_throwsModuleNotFoundException() {
-        assertThrows(ModuleNotFoundException.class, () -> uniqueModuleList.setModule(MODULE_A, MODULE_A));
+    public void setT_targetModuleNotInList_throwsModuleNotFoundException() {
+        assertThrows(ModuleNotFoundException.class, () -> uniqueModuleList.setT(MODULE_A, MODULE_A));
     }
 
     @Test
-    public void setModule_editedModuleIsSameModule_success() {
+    public void setT_editedModuleisSame_success() {
         uniqueModuleList.add(MODULE_A);
-        uniqueModuleList.setModule(MODULE_A, MODULE_A);
+        uniqueModuleList.setT(MODULE_A, MODULE_A);
         UniqueModuleList expectedUniqueModuleList = new UniqueModuleList();
         expectedUniqueModuleList.add(MODULE_A);
         assertEquals(expectedUniqueModuleList, uniqueModuleList);
     }
 
     @Test
-    public void setModule_editedModuleHasSameIdentity_success() {
+    public void setT_editedModuleHasSameIdentity_success() {
         uniqueModuleList.add(MODULE_A);
         Module editedModule = new ModuleBuilder(MODULE_A).withName("edited").build();
-        uniqueModuleList.setModule(MODULE_A, editedModule);
+        uniqueModuleList.setT(MODULE_A, editedModule);
         UniqueModuleList expectedUniqueModuleList = new UniqueModuleList();
         expectedUniqueModuleList.add(editedModule);
         assertEquals(expectedUniqueModuleList, uniqueModuleList);
     }
 
     @Test
-    public void setModule_editedModuleHasDifferentIdentity_success() {
+    public void setT_editedModuleHasDifferentIdentity_success() {
         uniqueModuleList.add(MODULE_A);
-        uniqueModuleList.setModule(MODULE_A, MODULE_B);
+        uniqueModuleList.setT(MODULE_A, MODULE_B);
         UniqueModuleList expectedUniqueModuleList = new UniqueModuleList();
         expectedUniqueModuleList.add(MODULE_B);
         assertEquals(expectedUniqueModuleList, uniqueModuleList);
     }
 
     @Test
-    public void setModule_editedModuleHasNonUniqueIdentity_throwsDuplicateModuleException() {
+    public void setT_editedModuleHasNonUniqueIdentity_throwsDuplicateModuleException() {
         uniqueModuleList.add(MODULE_A);
         uniqueModuleList.add(MODULE_B);
-        assertThrows(DuplicateModuleException.class, () -> uniqueModuleList.setModule(MODULE_A, MODULE_B));
+        assertThrows(DuplicateModuleException.class, () -> uniqueModuleList.setT(MODULE_A, MODULE_B));
     }
 
     @Test
@@ -123,38 +123,38 @@ public class UniqueModuleListTest {
     }
 
     @Test
-    public void setModules_nullUniqueModuleList_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> uniqueModuleList.setModules((UniqueModuleList) null));
+    public void setTs_nullUniqueModuleList_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> uniqueModuleList.setTs((UniqueModuleList) null));
     }
 
     @Test
-    public void setModules_uniqueModuleList_replacesOwnListWithProvidedUniqueModuleList() {
+    public void setTs_uniqueModuleList_replacesOwnListWithProvidedUniqueModuleList() {
         uniqueModuleList.add(MODULE_A);
         UniqueModuleList expectedUniqueModuleList = new UniqueModuleList();
         expectedUniqueModuleList.add(MODULE_B);
-        uniqueModuleList.setModules(expectedUniqueModuleList);
+        uniqueModuleList.setTs(expectedUniqueModuleList);
         assertEquals(expectedUniqueModuleList, uniqueModuleList);
     }
 
     @Test
-    public void setModules_nullList_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> uniqueModuleList.setModules((List<Module>) null));
+    public void setTs_nullList_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> uniqueModuleList.setTs((List<Module>) null));
     }
 
     @Test
-    public void setModules_list_replacesOwnListWithProvidedList() {
+    public void setTs_list_replacesOwnListWithProvidedList() {
         uniqueModuleList.add(MODULE_A);
         List<Module> moduleList = Collections.singletonList(MODULE_B);
-        uniqueModuleList.setModules(moduleList);
+        uniqueModuleList.setTs(moduleList);
         UniqueModuleList expectedUniqueModuleList = new UniqueModuleList();
         expectedUniqueModuleList.add(MODULE_B);
         assertEquals(expectedUniqueModuleList, uniqueModuleList);
     }
 
     @Test
-    public void setModules_listWithDuplicateModules_throwsDuplicateModuleException() {
+    public void setTs_listWithDuplicateModules_throwsDuplicateModuleException() {
         List<Module> listWithDuplicateModules = Arrays.asList(MODULE_A, MODULE_A);
-        assertThrows(DuplicateModuleException.class, () -> uniqueModuleList.setModules(listWithDuplicateModules));
+        assertThrows(DuplicateModuleException.class, () -> uniqueModuleList.setTs(listWithDuplicateModules));
     }
 
     @Test

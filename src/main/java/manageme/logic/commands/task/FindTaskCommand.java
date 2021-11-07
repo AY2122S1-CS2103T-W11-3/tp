@@ -6,7 +6,7 @@ import manageme.commons.core.Messages;
 import manageme.logic.commands.Command;
 import manageme.logic.commands.CommandResult;
 import manageme.model.Model;
-import manageme.model.task.TaskNameContainsKeywordsPredicate;
+import manageme.model.NameContainsKeywordsPredicate;
 
 /**
  * Finds and lists all tasks in ManageMe whose name contains any of the argument keywords.
@@ -21,9 +21,9 @@ public class FindTaskCommand extends Command {
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " Do homework";
 
-    private final TaskNameContainsKeywordsPredicate predicate;
+    private final NameContainsKeywordsPredicate predicate;
 
-    public FindTaskCommand(TaskNameContainsKeywordsPredicate predicate) {
+    public FindTaskCommand(NameContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
 

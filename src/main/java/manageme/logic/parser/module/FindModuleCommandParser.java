@@ -6,7 +6,7 @@ import manageme.commons.core.Messages;
 import manageme.logic.commands.module.FindModuleCommand;
 import manageme.logic.parser.Parser;
 import manageme.logic.parser.exceptions.ParseException;
-import manageme.model.module.ModNameContainsKeywordsPredicate;
+import manageme.model.NameContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new FindModuleCommand object
@@ -27,7 +27,7 @@ public class FindModuleCommandParser implements Parser<FindModuleCommand> {
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
 
-        return new FindModuleCommand(new ModNameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+        return new FindModuleCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
     }
 
 }

@@ -13,25 +13,25 @@ import manageme.testutil.ModuleBuilder;
 public class ModuleTest {
 
     @Test
-    public void isSameModule() {
+    public void isSame() {
         // same object -> returns true
-        assertTrue(MODULE_A.isSameModule(MODULE_A));
+        assertTrue(MODULE_A.isSame(MODULE_A));
 
         // null -> returns false
-        assertFalse(MODULE_A.isSameModule(null));
+        assertFalse(MODULE_A.isSame(null));
 
         // same name -> returns true
         Module editedCS2100 = new ModuleBuilder(MODULE_A).build();
-        assertTrue(MODULE_A.isSameModule(editedCS2100));
+        assertTrue(MODULE_A.isSame(editedCS2100));
 
         // name differs in case, all other attributes same -> returns false
         Module smallCaseCS2100 = new ModuleBuilder().withName(VALID_MODNAME_A.toLowerCase()).build();
-        assertFalse(MODULE_A.isSameModule(smallCaseCS2100));
+        assertFalse(MODULE_A.isSame(smallCaseCS2100));
 
         // name has trailing spaces, all other attributes same -> returns false
         String nameWithTrailingSpaces = VALID_MODNAME_A + " ";
         editedCS2100 = new ModuleBuilder(MODULE_A).withName(nameWithTrailingSpaces).build();
-        assertFalse(MODULE_A.isSameModule(editedCS2100));
+        assertFalse(MODULE_A.isSame(editedCS2100));
     }
 
     @Test

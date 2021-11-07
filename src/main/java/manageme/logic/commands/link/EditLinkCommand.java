@@ -16,12 +16,11 @@ import manageme.logic.commands.Command;
 import manageme.logic.commands.CommandResult;
 import manageme.logic.commands.exceptions.CommandException;
 import manageme.model.Model;
+import manageme.model.Name;
+import manageme.model.TagModule;
 import manageme.model.link.Link;
 import manageme.model.link.LinkAddress;
-import manageme.model.link.LinkModule;
-import manageme.model.link.LinkName;
 import manageme.model.module.Module;
-import manageme.model.module.ModuleName;
 
 /**
  * Edits the details of an existing link in the address book.
@@ -73,18 +72,18 @@ public class EditLinkCommand extends Command {
         Link linkToEdit = lastShownList.get(index.getZeroBased());
         Link editedLink = createEditedLink(linkToEdit, editLinkDescriptor);
 
-        if (!linkToEdit.isSameLink(editedLink) && model.hasLink(editedLink)) {
+        if (!linkToEdit.isSame(editedLink) && model.has(editedLink)) {
             throw new CommandException(MESSAGE_DUPLICATE_LINK);
         }
 
         //if there is a module being associated, check it exists
         if (!editedLink.getLinkModule().value.isEmpty()) {
-            if (!model.hasModule(new Module(new ModuleName(editedLink.getLinkModule().value)))) {
+            if (!model.has(new Module(new Name(editedLink.getLinkModule().value)))) {
                 throw new CommandException(MESSAGE_NONEXISTENT_MODULE);
             }
         }
 
-        model.setLink(linkToEdit, editedLink);
+        model.set(linkToEdit, editedLink);
         model.updateFilteredLinkList(PREDICATE_SHOW_ALL_LINKS);
         return new CommandResult(String.format(MESSAGE_EDIT_LINK_SUCCESS, editedLink));
     }
@@ -96,9 +95,9 @@ public class EditLinkCommand extends Command {
     private static Link createEditedLink(Link linkToEdit, EditLinkDescriptor editLinkDescriptor) {
         assert linkToEdit != null;
 
-        LinkName updatedName = editLinkDescriptor.getName().orElse(linkToEdit.getName());
+        Name updatedName = editLinkDescriptor.getName().orElse(linkToEdit.getName());
         LinkAddress updatedAddress = editLinkDescriptor.getAddress().orElse(linkToEdit.getAddress());
-        LinkModule updatedModule = editLinkDescriptor.getLinkModule().orElse(linkToEdit.getLinkModule());
+        TagModule updatedModule = editLinkDescriptor.getLinkModule().orElse(linkToEdit.getLinkModule());
 
         return new Link(updatedName, updatedAddress, updatedModule);
     }
@@ -126,9 +125,9 @@ public class EditLinkCommand extends Command {
      * corresponding field value of the link.
      */
     public static class EditLinkDescriptor {
-        private LinkName name;
+        private Name name;
         private LinkAddress address;
-        private LinkModule module;
+        private TagModule module;
 
         public EditLinkDescriptor() {}
 
@@ -149,11 +148,11 @@ public class EditLinkCommand extends Command {
             return CollectionUtil.isAnyNonNull(name, address, module);
         }
 
-        public void setName(LinkName name) {
+        public void setName(Name name) {
             this.name = name;
         }
 
-        public Optional<LinkName> getName() {
+        public Optional<Name> getName() {
             return Optional.ofNullable(name);
         }
 
@@ -165,11 +164,11 @@ public class EditLinkCommand extends Command {
             return Optional.ofNullable(address);
         }
 
-        public void setModule(LinkModule module) {
+        public void setModule(TagModule module) {
             this.module = module;
         }
 
-        public Optional<LinkModule> getLinkModule() {
+        public Optional<TagModule> getLinkModule() {
             return Optional.ofNullable(module);
         }
 

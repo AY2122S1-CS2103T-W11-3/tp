@@ -22,6 +22,21 @@ In the event that you are lost on the page, scroll down to the end of each secti
 
 --------------------------------------------------------------------------------------------------------------------
 
+## **Introduction**
+
+Welcome to ManageMe’s Developer Guide (DG).
+
+ManageMe is a **lightweight but powerful desktop application built to help university students manage their school life, available on Windows, Linux and Mac**. Students can add modules, tasks, schedules and online learning resources easily into ManageMe and access them with simple commands. The application is optimized for use via a **Command Line Interface (CLI)** but also provides a simple and convenient Graphical User Interface (GUI) for interaction.
+
+The detailed guide below will provide to developers like yourself, information such as how exactly ManageMe is built, the architectural diagrams, user stories, product scope, common use cases and non-functional requirements. At the end of this guide, we hope that you gained a much greater understanding of how ManageMe works and hopefully, you are able to contribute to this project as well.
+
+The DG is formatted in a way that every single section is preceded by a header. In those sections, there will be some screenshots and brief explanations to better your understanding. Terms that are in `this format` signifies that it is a part of the codebase, such as a class or a directory. E.g `Logic`, `Storage`
+
+
+In the event that you are lost on the page, scroll down to the end of each section and click on the return to [Table of Contents](#table-of-contents).
+
+--------------------------------------------------------------------------------------------------------------------
+
 ## **Acknowledgements**
 
 * This project is based on the educational project [AddressBook Level3](https://github.com/se-edu/addressbook-level3)
@@ -90,14 +105,15 @@ Return to [Table of Contents](#table-of-contents).
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/AY2122S1-CS2103T-W11-3/tp/blob/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2122S1-CS2103T-W11-3/tp/blob/master/src/main/java/manageme/ui/Ui.java)
 
-![Structure of the UI Component](images/UiClassDiagram.png)
+<img src=”images/UiClassDiagram.png” width=”800” />
 
 The UI consists of a `MmMainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `ModuleListPanel`, `TaskListPanel` etc. All these, including the `MmMainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts is defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MmMainWindow`](https://github.com/AY2122S1-CS2103T-W11-3/tp/blob/master/src/main/java/seedu/address/ui/MmMainWindow.java) is specified in [`MmMainWindow.fxml`](https://github.com/AY2122S1-CS2103T-W11-3/tp/blob/master/src/main/resources/view/MmMainWindow.fxml)
-
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts is defined in matching `.fxml` files that are in the `src/main/resources/view` folder.
+For example, the layout of the [`MmMainWindow`](https://github.com/AY2122S1-CS2103T-W11-3/tp/blob/master/src/main/java/manageme/ui/MmMainWindow.java)
+is specified in [`MmMainWindow.fxml`](https://github.com/AY2122S1-CS2103T-W11-3/tp/blob/master/src/main/resources/view/MmMainWindow.fxml)
 
 The `UI` component,
 
@@ -200,12 +216,66 @@ Return to [Table of Contents](#table-of-contents).
 
 ## **Implementation**
 
-### [Proposed] Set reminder to pop a specified amount of time before task starts
-Currently the task reminder pops up at the moment when the task starts, or when the task is ongoing. However, this feature will be more useful if the user can set the reminder to pop a certain time before the task starts.
 
-### [Proposed] Add recurring tasks
-Currently
+### Calendar feature
+ManageMe has a calendar feature for users to view all of their upcoming tasks for the month.
 
+#### Implementation
+The `CalendarPanel` consists of two main components, calendar and a task-list panel. A note-worthy field of the `CalendarPanel` is `referenceDate` whereby the task list panel will display the tasks happening on `referenceDate` in greater details. The month that is displayed is also based on the `referenceDate`. The default `referenceDate` is the current date when the application is first opened. <br><br>
+Calendar provides a visual representation of the user's schedule for the month. Days with upcoming tasks are denoted by a green dot. The `calendarPlaceholder`, which is the frame for the calendar, is a `GridPane`. The first row of the `GridPane` is a `Label` which represents a specific month and year. The second row has seven column where each cell is `Label` which represents the day-of-week. From the third row onwards, each cell is made up of a `DayCard`, which extends `UiPart<Region>` and represents a day in the calendar. The `DayCard` is made up of a `Label` and `Rectangle` with two `PseudoClass` to differentiate days with tasks and the reference date. <br><br>
+Task-list panel displays the tasks happening on `referenceDate` in greater details. It is made up of a `VBox` which contains a `Label`, which is the title, and a `StackPane`, which contains a `ListView<Task>`. <br><br>
+The following sequence diagram demonstrates how the Calendar is created.
+
+![CalendarConstructorSequenceDiagram](images/CalendarConstructorSequenceDiagram.png) <br>
+*Figure. Sequence diagram of creation of Calendar*
+
+Since the `CalendarPanel` is constructed with an `ObservableList<Task>`, changes to `UniqueTaskList` made by user using `addTask`, `deleteTask` and `editTask` will be reflected in the calendar automatically. <br><br>
+Calendar has three functionality, `prevMonth`, `nextMonth` and `readDay`, all of which manipulate `referenceDate`, which is the key component for generating the whole calendar GUI. Both `prevMonth` and `nextMonth` subtracts or adds the current `referenceDate` by a month respectively. While `readDay` takes in a `LocalDate` as argument and replace the `referenceDate` with it.
+
+#### Design Consideration
+The main consideration for the design of calendar is how many days should be displayed. The initial implementation was a "Week Calendar" which uses the current version of [NUSMODS](https://nusmods.com/timetable/sem-1) as reference. However, this design implies that there cannot be an overlap in the timing of different tasks. It would work for NUSMODS since it is a timetable and classes are not supposed to clash. However, it will not be as suitable for a calendar since multiple tasks can be happening or due at the same time. We decided to use the current implementation which is a "Month Calendar" with markings to represent the existence of tasks in the respective day-of-month and a task-list panel to display the tasks in greater details.
+![Calendar](images/Calendar.png) <br>
+*Figure. Screenshot of GUI of calendar in ManageMe.*
+
+
+### **Reminder Feature**
+In this section, the functionality of the reminder feature and its activity diagram will be discussed.
+
+### **Implementation of Reminders**
+Reminders are implemented under the `TimeManager` Class which is located under the `time` package.
+
+The main thread, which handles the user inputs and command
+execution, will operate as per normal, except that an additional thread runs with it.
+
+This additional **Time** Thread will constantly check all the current tasks to make sure
+that the user is notified of any tasks that requires attention.
+This notification appears in the form of a pop-out with implementation located under the `time` package as well
+
+### **Activity Diagram of Reminders**
+
+<img src="images/RemindersActivityDiagram.png" width="550" /> <br>
+
+*Figure 10: Reminders Activity Diagram*
+
+The above figure illustrates the execution path of Reminders when the user starts ManageMe.
+
+When the user starts the application, 2 threads are immediately created. The **Main Thread** and the **Time** Thread.
+
+For this activity diagram, the entire **Main Thread** will be represented by one action block only as this is not the
+main focus.
+
+The following actions occur when the **Time Thread** is created:
+1. `TimeManager` is initialized and starts to run.
+2. ManageMe is now in an **Alert State**. This means that this thread is constantly checking if ManageMe is still
+running.
+   1. If it is, check if there are any tasks that the user needs to be notified of. Once done,
+   return to **Alert State**.
+   2. If it is not, all threads including **Main Thread** will be ended and the application226G ends.
+
+
+<div markdown="span" class="alert alert-info">:information_source: ** Note:** As long as ManageMe is still running, it
+will continue to scan for tasks that need the user's attention.
+</div>
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
@@ -302,7 +372,7 @@ Return to [Table of Contents](#table-of-contents).
 Use case resumes from step 1.
 *1b. Parameters entered are invalid, including invalid characters in the name, invalid date-time in the task, and invalid addresses in links.
 * 1b1. System shows error in format.
-Use case resumes from step 1.
+  Use case resumes from step 1.
 
 
 **Use case: Generic Edit**
@@ -428,7 +498,7 @@ testers are expected to do more *exploratory* testing.
     1. Other incorrect delete commands to try: `deleteTask`, `deleteTask x`, `...` (where x is larger than the list size)<br>
        Expected: Similar to previous.
 
-       
+
 ### Pop-up window
 
 1. Test whether the pop-up window works in the app
@@ -452,4 +522,3 @@ Expected: A window appears that show all tasks and links associated with a modul
        Expected: Warning of invalid json file will be shown in the terminal. An empty ManageMe is launched.
 
 Return to [Table of Contents](#table-of-contents).
-

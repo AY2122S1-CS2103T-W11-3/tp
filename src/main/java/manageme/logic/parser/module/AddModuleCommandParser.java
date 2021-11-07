@@ -13,7 +13,7 @@ import manageme.logic.parser.Parser;
 import manageme.logic.parser.ParserUtil;
 import manageme.logic.parser.Prefix;
 import manageme.logic.parser.exceptions.ParseException;
-import manageme.model.module.ModuleName;
+import manageme.model.Name;
 
 public class AddModuleCommandParser implements Parser<AddModuleCommand> {
     @Override
@@ -27,7 +27,7 @@ public class AddModuleCommandParser implements Parser<AddModuleCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddModuleCommand.MESSAGE_USAGE));
         }
 
-        ModuleName name = ParserUtil.parseModuleName(argMultimap.getValue(PREFIX_NAME).get());
+        Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
 
         return new AddModuleCommand(name);
     }

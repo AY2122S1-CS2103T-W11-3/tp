@@ -2,6 +2,7 @@ package manageme.logic.commands.link;
 
 import static manageme.logic.commands.CommandTestUtil.assertCommandFailure;
 import static manageme.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static manageme.logic.commands.CommandTestUtil.showLinkAtIndex;
 import static manageme.testutil.TypicalIndexes.INDEX_FIRST;
 import static manageme.testutil.TypicalIndexes.INDEX_SECOND;
 import static manageme.testutil.TypicalManageMe.getTypicalManageMe;
@@ -33,7 +34,7 @@ public class DeleteLinkCommandTest {
         String expectedMessage = String.format(DeleteLinkCommand.MESSAGE_DELETE_LINK_SUCCESS, linkToDelete);
 
         ModelManager expectedModel = new ModelManager(model.getManageMe(), new UserPrefs());
-        expectedModel.deleteLink(linkToDelete);
+        expectedModel.delete(linkToDelete);
 
         assertCommandSuccess(deleteLinkCommand, model, expectedMessage, expectedModel);
     }
@@ -46,34 +47,33 @@ public class DeleteLinkCommandTest {
         assertCommandFailure(deleteLinkCommand, model, Messages.MESSAGE_INVALID_LINK_DISPLAYED_INDEX);
     }
 
-    //    @Test
-    //    public void execute_validIndexFilteredList_success() {
-    //        showLinkAtIndex(model, INDEX_FIRST);
-    //
-    //        Link linkToDelete = model.getFilteredLinkList().get(INDEX_FIRST.getZeroBased());
-    //        DeleteLinkCommand deleteLinkCommand = new DeleteLinkCommand(INDEX_FIRST);
-    //
-    //        String expectedMessage = String.format(DeleteLinkCommand.MESSAGE_DELETE_LINK_SUCCESS, linkToDelete);
-    //
-    //        Model expectedModel = new ModelManager(model.getManageMe(), new UserPrefs());
-    //        expectedModel.deleteLink(linkToDelete);
-    //        showNoLink(expectedModel);
-    //
-    //        assertCommandSuccess(deleteLinkCommand, model, expectedMessage, expectedModel);
-    //    }
+    @Test
+    public void execute_validIndexFilteredList_success() {
+        showLinkAtIndex(model, INDEX_FIRST);
+        Link linkToDelete = model.getFilteredLinkList().get(INDEX_FIRST.getZeroBased());
+        DeleteLinkCommand deleteLinkCommand = new DeleteLinkCommand(INDEX_FIRST);
 
-    //    @Test
-    //    public void execute_invalidIndexFilteredList_throwsCommandException() {
-    //        showLinkAtIndex(model, INDEX_FIRST);
-    //
-    //        Index outOfBoundIndex = INDEX_SECOND;
-    //        // ensures that outOfBoundIndex is still in bounds of address book list
-    //        assertTrue(outOfBoundIndex.getZeroBased() < model.getManageMe().getLinkList().size());
-    //
-    //        DeleteLinkCommand deleteLinkCommand = new DeleteLinkCommand(outOfBoundIndex);
-    //
-    //        assertCommandFailure(deleteLinkCommand, model, Messages.MESSAGE_INVALID_LINK_DISPLAYED_INDEX);
-    //    }
+        String expectedMessage = String.format(DeleteLinkCommand.MESSAGE_DELETE_LINK_SUCCESS, linkToDelete);
+
+        Model expectedModel = new ModelManager(model.getManageMe(), new UserPrefs());
+        expectedModel.delete(linkToDelete);
+        showNoLink(expectedModel);
+
+        assertCommandSuccess(deleteLinkCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_invalidIndexFilteredList_throwsCommandException() {
+        showLinkAtIndex(model, INDEX_FIRST);
+
+        Index outOfBoundIndex = INDEX_SECOND;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getManageMe().getLinkList().size());
+
+        DeleteLinkCommand deleteLinkCommand = new DeleteLinkCommand(outOfBoundIndex);
+
+        assertCommandFailure(deleteLinkCommand, model, Messages.MESSAGE_INVALID_LINK_DISPLAYED_INDEX);
+    }
 
     @Test
     public void equals() {

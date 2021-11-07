@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import manageme.commons.exceptions.IllegalValueException;
+import manageme.model.Name;
+import manageme.model.TagModule;
 import manageme.model.task.Task;
 import manageme.model.task.TaskDescription;
 import manageme.model.task.TaskIsDone;
-import manageme.model.task.TaskModule;
-import manageme.model.task.TaskName;
 import manageme.model.task.TaskTime;
 
 /**
@@ -19,7 +19,7 @@ public class JsonAdaptedTask {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Task's %s field is missing!";
 
     // 3 Optional - time/end-time/modules
-    private final String taskName;
+    private final String name;
     private final String taskDescription;
     private final String isDone;
     private final String module;
@@ -32,12 +32,12 @@ public class JsonAdaptedTask {
      * Constructs a {@code JsonAdaptedTask} with the given task details.
      */
     @JsonCreator
-    public JsonAdaptedTask(@JsonProperty("name") String taskName, @JsonProperty("description") String description,
+    public JsonAdaptedTask(@JsonProperty("name") String name, @JsonProperty("description") String description,
                            @JsonProperty("isDone") String isDone, @JsonProperty("module") String module,
                            @JsonProperty("start") String start,
                            @JsonProperty("end") String end) {
         //                   @JsonProperty("tagged") List<JsonAdaptedTag> tagged) {
-        this.taskName = taskName;
+        this.name = name;
         this.taskDescription = description;
         this.isDone = isDone;
         this.module = module;
@@ -52,13 +52,13 @@ public class JsonAdaptedTask {
      * Converts a given {@code Task} into this class for Jackson use.
      */
     public JsonAdaptedTask(Task source) {
-        this.taskName = source.getName().value;
+        this.name = source.getName().value;
         this.taskDescription = source.getDescription().value;
         this.isDone = source.isDone().toString();
         //tagged.addAll(source.getTag().stream()
         //        .map(JsonAdaptedTag::new)
         //        .collect(Collectors.toList());
-        this.module = source.getTaskModule().value;
+        this.module = source.getTagModule().value;
         this.start = source.getStart().value;
         this.end = source.getEnd().value;
     }
@@ -75,13 +75,13 @@ public class JsonAdaptedTask {
         //    taskTags.add(tag.toModelType());
         //}
 
-        if (taskName == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "TaskName"));
+        if (name == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Name"));
         }
-        if (!TaskName.isValidName(taskName)) {
-            throw new IllegalValueException(TaskName.MESSAGE_CONSTRAINTS);
+        if (!Name.isValidName(name)) {
+            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
         }
-        final TaskName modelName = new TaskName(taskName);
+        final Name modelName = new Name(name);
 
         if (taskDescription == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "TaskDescription"));
@@ -101,7 +101,7 @@ public class JsonAdaptedTask {
 
         final TaskIsDone modelIsDone = new TaskIsDone(isDone.equals("yes"));
 
-        final TaskModule modelModule = !module.equals("") ? new TaskModule(module) : TaskModule.empty();
+        final TagModule modelModule = !module.equals("") ? new TagModule(module) : TagModule.empty();
 
         final TaskTime modelStart = !start.equals("") ? new TaskTime(start) : TaskTime.empty();
 

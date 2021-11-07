@@ -1,0 +1,85 @@
+@startuml
+!include style.puml
+
+box UI UI_COLOR_T1
+participant ":MmMainWindow" as MmMainWindow UI_COLOR
+end box
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":ManageMeParser" as ManageMeParser LOGIC_COLOR
+participant ":ReadModuleCommandParser" as ReadModuleCommandParser LOGIC_COLOR
+participant "r:ReadModuleCommand" as ReadModuleCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+MmMainWindow -> LogicManager : execute("readMod 1")
+activate MmMainWindow
+
+activate LogicManager
+LogicManager -> ManageMeParser : parseCommand("readMod 1")
+activate ManageMeParser
+
+create ReadModuleCommandParser
+ManageMeParser -> ReadModuleCommandParser
+activate ReadModuleCommandParser
+
+ReadModuleCommandParser --> ManageMeParser
+deactivate ReadModuleCommandParser
+
+ManageMeParser -> ReadModuleCommandParser : parse("1")
+activate ReadModuleCommandParser
+
+create ReadModuleCommand
+ReadModuleCommandParser -> ReadModuleCommand
+activate ReadModuleCommand
+
+ReadModuleCommand --> ReadModuleCommandParser : r
+deactivate ReadModuleCommand
+
+ReadModuleCommandParser --> ManageMeParser : r
+deactivate ReadModuleCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+ReadModuleCommandParser -[hidden]-> ManageMeParser
+destroy ReadModuleCommandParser
+
+ManageMeParser --> LogicManager : r
+deactivate ManageMeParser
+
+LogicManager -> ReadModuleCommand : execute(model)
+activate ReadModuleCommand
+
+ReadModuleCommand -> Model : getFilteredModuleList()
+activate Model
+
+Model --> ReadModuleCommand :lastShownList()
+deactivate Model
+
+ReadModuleCommand -> Model : setReadModule(module)
+activate Model
+
+Model --> ReadModuleCommand
+deactivate Model
+
+create CommandResult
+ReadModuleCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> ReadModuleCommand : result
+deactivate CommandResult
+
+ReadModuleCommand --> LogicManager : result
+deactivate ReadModuleCommand
+
+LogicManager --> MmMainWindow: result
+deactivate LogicManager
+
+ref over MmMainWindow
+  display module window
+end ref
+
+@enduml

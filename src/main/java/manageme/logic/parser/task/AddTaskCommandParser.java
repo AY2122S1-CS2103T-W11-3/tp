@@ -16,10 +16,10 @@ import manageme.logic.parser.Parser;
 import manageme.logic.parser.ParserUtil;
 import manageme.logic.parser.Prefix;
 import manageme.logic.parser.exceptions.ParseException;
+import manageme.model.Name;
+import manageme.model.TagModule;
 import manageme.model.task.Task;
 import manageme.model.task.TaskDescription;
-import manageme.model.task.TaskModule;
-import manageme.model.task.TaskName;
 import manageme.model.task.TaskTime;
 
 public class AddTaskCommandParser implements Parser<AddTaskCommand> {
@@ -43,12 +43,12 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
                     AddTaskCommand.MESSAGE_START_WITHOUT_END));
         }
 
-        TaskName name = ParserUtil.parseTaskName(argMultimap.getValue(PREFIX_NAME).get());
+        Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         TaskDescription description =
                 ParserUtil.parseTaskDescription(argMultimap.getValue(PREFIX_DESCRIPTION).get());
-        TaskModule module = argMultimap.getValue(PREFIX_MODULE).isPresent()
-                ? ParserUtil.parseTaskModule(argMultimap.getValue(PREFIX_MODULE).get())
-                : TaskModule.empty();
+        TagModule module = argMultimap.getValue(PREFIX_MODULE).isPresent()
+                ? ParserUtil.parseTagModule(argMultimap.getValue(PREFIX_MODULE).get())
+                : TagModule.empty();
         TaskTime start = argMultimap.getValue(PREFIX_START).isPresent()
                 ? ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_START).get())
                 : TaskTime.empty();

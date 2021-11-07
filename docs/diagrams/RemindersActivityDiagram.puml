@@ -1,0 +1,21 @@
+@startuml
+(*) -> User starts ManageMe
+--> ===B1===
+-left> "Main Thread"
+--> ===B2===
+
+===B1=== -right-> "Time Thread"
+--> "TimeManager \n started"
+--> "ManageMe in \n Alert State"
+--> "State of ManageMe"
+--> if "[Still Running?]"
+---up> [Yes] "Show \n Notification,\n if any"
+
+--> "ManageMe in \n Alert State"
+
+    else
+    --> [No] ==B2==
+    endif
+--> End all threads
+--> (*)
+@enduml

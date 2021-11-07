@@ -11,8 +11,8 @@ import manageme.logic.commands.Command;
 import manageme.logic.commands.CommandResult;
 import manageme.logic.commands.exceptions.CommandException;
 import manageme.model.Model;
+import manageme.model.Name;
 import manageme.model.module.Module;
-import manageme.model.module.ModuleName;
 import manageme.model.task.Task;
 
 public class AddTaskCommand extends Command {
@@ -53,21 +53,21 @@ public class AddTaskCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        if (model.hasTask(toAdd)) {
+        if (model.has(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
         }
 
         //if there is a module being associated, check it exists
-        if (!toAdd.getTaskModule().value.isEmpty()) {
-            if (!model.hasModule(new Module(new ModuleName(toAdd.getTaskModule().value)))) {
+        if (!toAdd.getTagModule().value.isEmpty()) {
+            if (!model.has(new Module(new Name(toAdd.getTagModule().value)))) {
                 throw new CommandException(MESSAGE_NONEXISTENT_MODULE);
             }
         }
 
-
-        model.addTask(toAdd);
+        model.add(toAdd);
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
     }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

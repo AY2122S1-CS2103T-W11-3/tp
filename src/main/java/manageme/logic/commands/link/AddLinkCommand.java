@@ -9,9 +9,9 @@ import manageme.logic.commands.Command;
 import manageme.logic.commands.CommandResult;
 import manageme.logic.commands.exceptions.CommandException;
 import manageme.model.Model;
+import manageme.model.Name;
 import manageme.model.link.Link;
 import manageme.model.module.Module;
-import manageme.model.module.ModuleName;
 
 /**
  * Adds a link to the address book.
@@ -23,12 +23,14 @@ public class AddLinkCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a link to the address book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
-            + PREFIX_ADDRESS + "LINK ADDRESS "
+            + PREFIX_ADDRESS + "LINK_ADDRESS "
             + PREFIX_MODULE + "ASSOCIATED_MODULE_NAME\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Luminus "
             + PREFIX_ADDRESS + "https://luminus.nus.edu.sg/dashboard "
-            + PREFIX_MODULE + "CS2103T";
+            + PREFIX_MODULE + "CS2103T"
+            + "\nPlease take note that there should not be any space in the link. If there is a space in the file path"
+            + "that you want to add, please rename the file to remove the spaces.";
 
     public static final String MESSAGE_SUCCESS = "New link added: %1$s";
     public static final String MESSAGE_DUPLICATE_LINK = "This link already exists in the address book";
@@ -48,18 +50,18 @@ public class AddLinkCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        if (model.hasLink(toAdd)) {
+        if (model.has(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_LINK);
         }
 
         //if there is a module being associated, check it exists
         if (!toAdd.getLinkModule().value.isEmpty()) {
-            if (!model.hasModule(new Module(new ModuleName(toAdd.getLinkModule().value)))) {
+            if (!model.has(new Module(new Name(toAdd.getLinkModule().value)))) {
                 throw new CommandException(MESSAGE_NONEXISTENT_MODULE);
             }
         }
 
-        model.addLink(toAdd);
+        model.add(toAdd);
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
     }
 

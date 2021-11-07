@@ -40,7 +40,7 @@ public class EditModuleCommandParser implements Parser<EditModuleCommand> {
 
         EditModuleDescriptor editModuleDescriptor = new EditModuleDescriptor();
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            editModuleDescriptor.setModuleName(ParserUtil.parseModuleName(argMultimap.getValue(PREFIX_NAME).get()));
+            editModuleDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
         }
 
         if (!editModuleDescriptor.isAnyFieldEdited()) {

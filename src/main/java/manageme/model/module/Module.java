@@ -1,44 +1,52 @@
 package manageme.model.module;
 
-import manageme.commons.util.CollectionUtil;
+import manageme.model.ManageMeObject;
+import manageme.model.Name;
+import manageme.model.module.exceptions.DuplicateModuleException;
+import manageme.model.module.exceptions.ModuleNotFoundException;
 
 /**
  * Represents a Module in the app.
  * Guarantees: details are present and not null, field values are validated.
  */
-public class Module {
-
-    // Identity fields
-    private final ModuleName moduleName;
+public class Module extends ManageMeObject {
 
     /**
      * Link optional
      */
-    public Module(ModuleName moduleName) {
-        CollectionUtil.requireAllNonNull(moduleName);
-        this.moduleName = moduleName;
-    }
-
-    public ModuleName getModuleName() {
-        return moduleName;
+    public Module(Name name) {
+        super(name);
     }
 
     /**
      * Returns true if both mods have the same name.
      */
-    public boolean isSameModule(Module otherMod) {
+    @Override
+    public boolean isSame(ManageMeObject otherMod) {
         if (otherMod == this) {
             return true;
         }
+        if (otherMod instanceof Module) {
+            return otherMod != null
+                    && otherMod.getName().equals(getName());
+        } else {
+            return false;
+        }
+    }
 
-        return otherMod != null
-                && otherMod.getModuleName().equals(getModuleName());
+    @Override
+    public void throwDuplicateException() throws RuntimeException {
+        throw new DuplicateModuleException();
+    }
+
+    public void throwNotFoundException() throws RuntimeException {
+        throw new ModuleNotFoundException();
     }
 
     /**
      * Returns true if both mods have the same identity.
-     * This is the same as #isSameModule because of how Module is implemented,
-     * two Modules will be equals as long as they have the same ModuleName.
+     * This is the same as #isSame because of how Module is implemented,
+     * two Modules will be equals as long as they have the same Name.
      */
     @Override
     public boolean equals(Object other) {
@@ -51,20 +59,20 @@ public class Module {
         }
 
         Module otherMod = (Module) other;
-        return otherMod.getModuleName().equals(getModuleName());
+        return otherMod.getName().equals(getName());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
 
-        return moduleName.hashCode();
+        return getName().hashCode();
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getModuleName());
+        builder.append(getName());
 
         return builder.toString();
     }

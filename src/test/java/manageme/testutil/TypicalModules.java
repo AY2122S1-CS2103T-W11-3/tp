@@ -20,7 +20,7 @@ public class TypicalModules {
     public static ManageMe getTypicalManageMe() {
         ManageMe ab = new ManageMe();
         for (Module module : getTypicalModules()) {
-            ab.addModule(module);
+            ab.add(module);
         }
         return ab;
     }

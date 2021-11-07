@@ -5,7 +5,7 @@ import static manageme.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static manageme.logic.commands.CommandTestUtil.showTaskAtIndex;
 import static manageme.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 import static manageme.testutil.TypicalIndexes.INDEX_SECOND_TASK;
-import static manageme.testutil.TypicalTasks.getTypicalAddressBook;
+import static manageme.testutil.TypicalTasks.getTypicalManageMe;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -24,7 +24,7 @@ import manageme.model.task.Task;
  */
 public class DeleteTaskCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalManageMe(), new UserPrefs());
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
@@ -34,7 +34,7 @@ public class DeleteTaskCommandTest {
         String expectedMessage = String.format(DeleteTaskCommand.MESSAGE_DELETE_TASK_SUCCESS, taskToDelete);
 
         ModelManager expectedModel = new ModelManager(model.getManageMe(), new UserPrefs());
-        expectedModel.deleteTask(taskToDelete);
+        expectedModel.delete(taskToDelete);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
@@ -57,7 +57,7 @@ public class DeleteTaskCommandTest {
         String expectedMessage = String.format(DeleteTaskCommand.MESSAGE_DELETE_TASK_SUCCESS, taskToDelete);
 
         Model expectedModel = new ModelManager(model.getManageMe(), new UserPrefs());
-        expectedModel.deleteTask(taskToDelete);
+        expectedModel.delete(taskToDelete);
         showNoTask(expectedModel);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);

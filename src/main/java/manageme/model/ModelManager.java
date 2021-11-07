@@ -12,10 +12,8 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import manageme.commons.core.GuiSettings;
 import manageme.commons.core.LogsCenter;
-import manageme.commons.core.index.Index;
 import manageme.commons.util.CollectionUtil;
 import manageme.model.link.Link;
-import manageme.model.link.LinkModule;
 import manageme.model.module.Module;
 import manageme.model.task.Task;
 
@@ -109,14 +107,33 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public boolean hasLink(Link link) {
-        requireNonNull(link);
-        return manageMe.hasLink(link);
+    public <T extends ManageMeObject> boolean has(T target) {
+        requireNonNull(target);
+        return manageMe.has(target);
     }
 
     @Override
-    public void deleteLink(Link target) {
-        manageMe.removeLink(target);
+    public <T extends ManageMeObject> void delete(T target) {
+        requireNonNull(target);
+        manageMe.remove(target);
+    }
+
+    @Override
+    public <T extends ManageMeObject> void set(T target, T edited) {
+        requireNonNull(target);
+        manageMe.setT(target, edited);
+    }
+
+    @Override
+    public <T extends ManageMeObject> void add(T target) {
+        manageMe.add(target);
+        if (target instanceof Module) {
+            updateFilteredModuleList(PREDICATE_SHOW_ALL_MODULES);
+        } else if (target instanceof Link) {
+            updateFilteredLinkList(PREDICATE_SHOW_ALL_LINKS);
+        } else {
+            updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+        }
     }
 
     @Override
@@ -126,64 +143,27 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void addLink(Link link) {
-        manageMe.addLink(link);
-        updateFilteredLinkList(PREDICATE_SHOW_ALL_LINKS);
+    public void editModuleInLinksWithModule(Module target, TagModule newTagModule) {
+        TagModule targetTagModule = new TagModule(target.getName().value);
+        for (Link link: filteredLinks) {
+            if (link.getLinkModule().equals(targetTagModule)) {
+                Link sameLinkEditedModule = new Link(link.getName(), link.getAddress(),
+                        newTagModule);
+                set(link, sameLinkEditedModule);
+            }
+        }
     }
 
     @Override
-    public void setLink(Link target, Link editedLink) {
-        CollectionUtil.requireAllNonNull(target, editedLink);
-
-        manageMe.setLink(target, editedLink);
-    }
-
-    @Override
-    public boolean hasModule(Module module) {
-        requireNonNull(module);
-        return manageMe.hasModule(module);
-    }
-
-    @Override
-    public void deleteModule(Module target) {
-        manageMe.removeModule(target);
-    }
-
-    @Override
-    public void addModule(Module module) {
-        manageMe.addModule(module);
-        updateFilteredModuleList(PREDICATE_SHOW_ALL_MODULES);
-    }
-
-    @Override
-    public void setModule(Module target, Module editedModule) {
-        CollectionUtil.requireAllNonNull(target, editedModule);
-
-        manageMe.setModule(target, editedModule);
-    }
-
-    @Override
-    public boolean hasTask(Task task) {
-        requireNonNull(task);
-        return manageMe.hasTask(task);
-    }
-
-    @Override
-    public void deleteTask(Task target) {
-        manageMe.removeTask(target);
-    }
-
-    @Override
-    public void addTask(Task task) {
-        manageMe.addTask(task);
-        updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
-    }
-
-    @Override
-    public void setTask(Task target, Task editedTask) {
-        CollectionUtil.requireAllNonNull(target, editedTask);
-
-        manageMe.setTask(target, editedTask);
+    public void editModuleInTasksWithModule(Module target, TagModule newTagModule) {
+        TagModule targetTagModule = new TagModule(target.getName().value);
+        for (Task task: filteredTasks) {
+            if (task.getTagModule().equals(targetTagModule)) {
+                Task sameTaskEditedModule = new Task(task.getName(), task.getDescription(), task.isDone(),
+                        newTagModule, task.getStart(), task.getEnd());
+                set(task, sameTaskEditedModule);
+            }
+        }
     }
 
     /**
@@ -265,20 +245,5 @@ public class ModelManager implements Model {
                 && readModule.equals(other.readModule)
                 && filteredTasks.equals(other.filteredTasks)
                 && unfilteredTasks.equals(other.unfilteredTasks);
-    }
-
-    @Override
-    public Link deleteModLink(LinkModule mod, Index i) {
-        System.out.println(unfilteredLinks.size());
-        FilteredList<Link> modLinks = unfilteredLinks.filtered(link -> {
-            Optional<String> linkModule = link.getLinkModule().moduleName;
-            if (linkModule.isEmpty()) {
-                return false;
-            }
-            return mod.value.equals(linkModule.get());
-        });
-        Link toRemove = modLinks.get(i.getZeroBased());
-        manageMe.removeLink(toRemove);
-        return toRemove;
     }
 }

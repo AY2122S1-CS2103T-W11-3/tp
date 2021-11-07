@@ -1,26 +1,26 @@
 package manageme.testutil;
 
+import manageme.model.Name;
+import manageme.model.TagModule;
 import manageme.model.link.Link;
 import manageme.model.link.LinkAddress;
-import manageme.model.link.LinkModule;
-import manageme.model.link.LinkName;
 
 public class LinkBuilder {
     public static final String DEFAULT_NAME = "Tutorial";
     public static final String DEFAULT_LINK = "https://www.luminus.com";
     public static final String DEFAULT_MODULE = "CS2100";
 
-    private LinkName name;
+    private Name name;
     private LinkAddress address;
-    private LinkModule module;
+    private TagModule module;
 
     /**
      * Creates a {@code LinkBuilder} with the default details.
      */
     public LinkBuilder() {
-        name = new LinkName(DEFAULT_NAME);
+        name = new Name(DEFAULT_NAME);
         address = new LinkAddress(DEFAULT_LINK);
-        module = new LinkModule(DEFAULT_MODULE);
+        module = new TagModule(DEFAULT_MODULE);
     }
 
     /**
@@ -33,10 +33,10 @@ public class LinkBuilder {
     }
 
     /**
-     * Sets the {@code LinkName} of the {@code Link} that we are building.
+     * Sets the {@code Name} of the {@code Link} that we are building.
      */
     public LinkBuilder withName(String name) {
-        this.name = new LinkName(name);
+        this.name = new Name(name);
         return this;
     }
 
@@ -49,10 +49,10 @@ public class LinkBuilder {
     }
 
     /**
-     * Sets the {@code LinkModule} of the {@code Task} that we are building.
+     * Sets the {@code TagModule} of the {@code Task} that we are building.
      */
     public LinkBuilder withModule(String linkModule) {
-        this.module = linkModule.equals("") ? LinkModule.empty() : new LinkModule(linkModule);
+        this.module = linkModule.equals("") ? TagModule.empty() : new TagModule(linkModule);
         return this;
     }
 

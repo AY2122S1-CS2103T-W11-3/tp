@@ -32,10 +32,10 @@ import manageme.logic.commands.module.EditModuleCommand.EditModuleDescriptor;
 import manageme.logic.commands.module.FindModuleCommand;
 import manageme.logic.commands.module.ListModuleCommand;
 import manageme.logic.parser.exceptions.ParseException;
+import manageme.model.Name;
+import manageme.model.NameContainsKeywordsPredicate;
 import manageme.model.link.Link;
-import manageme.model.module.ModNameContainsKeywordsPredicate;
 import manageme.model.module.Module;
-import manageme.model.module.ModuleName;
 import manageme.testutil.EditLinkDescriptorBuilder;
 import manageme.testutil.EditModuleDescriptorBuilder;
 import manageme.testutil.LinkBuilder;
@@ -82,33 +82,18 @@ public class ManageMeParserTest {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
     }
 
-    //@Test
-    //public void parseCommand_find() throws Exception {
-    //    List<String> keywords = Arrays.asList("foo", "bar", "baz");
-    //    FindCommand command = (FindCommand) parser.parseCommand(
-    //            FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-    //    assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
-    //}
-
     @Test
     public void parseCommand_help() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3") instanceof HelpCommand);
     }
 
-    //@Test
-    //public void parseCommand_list() throws Exception {
-    //    assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
-    //    assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
-    //}
-
-
     @Test
     public void parseCommand_addModule() throws Exception {
-        ModuleName moduleName = new ModuleName(VALID_MODNAME_A);
+        Name name = new Name(VALID_MODNAME_A);
         Module module = new ModuleBuilder().build();
         AddModuleCommand command = (AddModuleCommand) parser.parseCommand(ModuleUtil.getAddModuleCommand(module));
-        assertEquals(new AddModuleCommand(moduleName), command);
+        assertEquals(new AddModuleCommand(name), command);
     }
 
     @Test
@@ -133,7 +118,7 @@ public class ManageMeParserTest {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         FindModuleCommand command = (FindModuleCommand) parser.parseCommand(
                 FindModuleCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindModuleCommand(new ModNameContainsKeywordsPredicate(keywords)), command);
+        assertEquals(new FindModuleCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 
 

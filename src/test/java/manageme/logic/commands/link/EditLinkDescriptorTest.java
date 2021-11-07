@@ -4,7 +4,7 @@ import static manageme.logic.commands.link.LinkCommandTestUtil.DESC_LINK_A;
 import static manageme.logic.commands.link.LinkCommandTestUtil.DESC_LINK_B;
 import static manageme.logic.commands.link.LinkCommandTestUtil.VALID_LINKADDRESS_B;
 import static manageme.logic.commands.link.LinkCommandTestUtil.VALID_LINKMODULE_B;
-import static manageme.logic.commands.link.LinkCommandTestUtil.VALID_LINKNAME_B;
+import static manageme.logic.commands.link.LinkCommandTestUtil.VALID_NAME_B;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -34,7 +34,7 @@ public class EditLinkDescriptorTest {
         assertFalse(DESC_LINK_A.equals(DESC_LINK_B));
 
         // different name -> returns false
-        EditLinkDescriptor editedLinkA = new EditLinkDescriptorBuilder(DESC_LINK_A).withName(VALID_LINKNAME_B).build();
+        EditLinkDescriptor editedLinkA = new EditLinkDescriptorBuilder(DESC_LINK_A).withName(VALID_NAME_B).build();
         assertFalse(DESC_LINK_A.equals(editedLinkA));
 
         // different address -> returns false

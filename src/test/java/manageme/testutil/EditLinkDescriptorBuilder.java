@@ -1,10 +1,10 @@
 package manageme.testutil;
 
 import manageme.logic.commands.link.EditLinkCommand.EditLinkDescriptor;
+import manageme.model.Name;
+import manageme.model.TagModule;
 import manageme.model.link.Link;
 import manageme.model.link.LinkAddress;
-import manageme.model.link.LinkModule;
-import manageme.model.link.LinkName;
 
 /**
  * A utility class to help with building EditLinkDescriptor objects.
@@ -35,7 +35,7 @@ public class EditLinkDescriptorBuilder {
      * Sets the {@code Name} of the {@code EditLinkDescriptor} that we are building.
      */
     public EditLinkDescriptorBuilder withName(String name) {
-        descriptor.setName(new LinkName(name));
+        descriptor.setName(new Name(name));
         return this;
     }
 
@@ -43,7 +43,7 @@ public class EditLinkDescriptorBuilder {
      * Sets the {@code Email} of the {@code EditLinkDescriptor} that we are building.
      */
     public EditLinkDescriptorBuilder withModule(String module) {
-        descriptor.setModule(new LinkModule(module));
+        descriptor.setModule(new TagModule(module));
         return this;
     }
 

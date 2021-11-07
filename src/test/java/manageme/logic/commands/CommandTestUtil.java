@@ -13,11 +13,10 @@ import manageme.commons.core.index.Index;
 import manageme.logic.commands.exceptions.CommandException;
 import manageme.model.ManageMe;
 import manageme.model.Model;
+import manageme.model.NameContainsKeywordsPredicate;
 import manageme.model.link.Link;
-import manageme.model.module.ModNameContainsKeywordsPredicate;
 import manageme.model.module.Module;
 import manageme.model.task.Task;
-import manageme.model.task.TaskNameContainsKeywordsPredicate;
 
 /**
  * Contains helper methods for testing commands.
@@ -86,7 +85,7 @@ public class CommandTestUtil {
         Task task = model.getFilteredTaskList().get(targetIndex.getZeroBased());
 
         final String[] splitName = task.getName().value.split("\\s+");
-        model.updateFilteredTaskList(new TaskNameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        model.updateFilteredTaskList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
         assertEquals(1, model.getFilteredTaskList().size());
     }
@@ -99,9 +98,24 @@ public class CommandTestUtil {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredModuleList().size());
 
         Module module = model.getFilteredModuleList().get(targetIndex.getZeroBased());
-        final String[] splitName = module.getModuleName().value.split("\\s+");
-        model.updateFilteredModuleList(new ModNameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        final String[] splitName = module.getName().value.split("\\s+");
+        model.updateFilteredModuleList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
         assertEquals(1, model.getFilteredModuleList().size());
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show only the task at the given {@code targetIndex} in the
+     * {@code model}'s address book.
+     */
+    public static void showLinkAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredLinkList().size());
+
+        Link link = model.getFilteredLinkList().get(targetIndex.getZeroBased());
+
+        final String[] splitName = link.getName().value.split("\\s+");
+        model.updateFilteredLinkList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+
+        assertEquals(1, model.getFilteredLinkList().size());
     }
 }

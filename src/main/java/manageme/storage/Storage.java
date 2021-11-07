@@ -27,6 +27,6 @@ public interface Storage extends ManageMeStorage, UserPrefsStorage {
     Optional<ReadOnlyManageMe> readManageMe() throws DataConversionException, IOException;
 
     @Override
-    void saveManageMe(ReadOnlyManageMe addressBook) throws IOException;
+    void saveManageMe(ReadOnlyManageMe manageMe) throws IOException;
 
 }

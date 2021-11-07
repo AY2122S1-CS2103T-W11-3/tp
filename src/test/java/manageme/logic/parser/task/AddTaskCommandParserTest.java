@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test;
 
 import manageme.logic.commands.task.AddTaskCommand;
 import manageme.logic.commands.task.TaskCommandTestUtil;
+import manageme.model.Name;
 import manageme.model.task.Task;
-import manageme.model.task.TaskName;
 import manageme.testutil.TaskBuilder;
 
 public class AddTaskCommandParserTest {
@@ -84,7 +84,7 @@ public class AddTaskCommandParserTest {
         // invalid name
         assertParseFailure(parser, TaskCommandTestUtil.INVALID_NAME_DESC
                 + TaskCommandTestUtil.DESCRIPTION_DESC_B + TaskCommandTestUtil.MODULE_DESC_B
-                + TaskCommandTestUtil.START_DESC_B + TaskCommandTestUtil.END_DESC_B , TaskName.MESSAGE_CONSTRAINTS);
+                + TaskCommandTestUtil.START_DESC_B + TaskCommandTestUtil.END_DESC_B , Name.MESSAGE_CONSTRAINTS);
 
         //Add more invalid testcases here once more are included
 

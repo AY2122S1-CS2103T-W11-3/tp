@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import manageme.commons.exceptions.IllegalValueException;
+import manageme.model.Name;
+import manageme.model.TagModule;
 import manageme.model.link.Link;
 import manageme.model.link.LinkAddress;
-import manageme.model.link.LinkModule;
-import manageme.model.link.LinkName;
 
 /**
  * Jackson-friendly version of {@link Link}.
@@ -16,7 +16,7 @@ public class JsonAdaptedLink {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Link's %s field is missing!";
 
-    private final String linkName;
+    private final String name;
     private final String address;
     private final String module;
 
@@ -25,9 +25,9 @@ public class JsonAdaptedLink {
      * Constructs a {@code JsonAdaptedLink} with the given person details.
      */
     @JsonCreator
-    public JsonAdaptedLink(@JsonProperty("name") String linkName, @JsonProperty("address") String address,
+    public JsonAdaptedLink(@JsonProperty("name") String name, @JsonProperty("address") String address,
                            @JsonProperty("module") String module) {
-        this.linkName = linkName;
+        this.name = name;
         this.address = address;
         this.module = module;
     }
@@ -36,7 +36,7 @@ public class JsonAdaptedLink {
      * Converts a given {@code Link} into this class for Jackson use.
      */
     public JsonAdaptedLink(Link source) {
-        this.linkName = source.getName().value;
+        this.name = source.getName().value;
         this.address = source.getAddress().value;
         this.module = source.getLinkModule().value;
     }
@@ -49,13 +49,13 @@ public class JsonAdaptedLink {
      */
     public Link toModelType() throws IllegalValueException {
 
-        if (linkName == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "LinkName"));
+        if (name == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Name"));
         }
-        if (!LinkName.isValidLinkName(linkName)) {
-            throw new IllegalValueException(LinkName.MESSAGE_CONSTRAINTS);
+        if (!Name.isValidName(name)) {
+            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
         }
-        final LinkName modelName = new LinkName(linkName);
+        final Name modelName = new Name(name);
 
         if (address == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Link Description"));
@@ -65,7 +65,7 @@ public class JsonAdaptedLink {
         }
         final LinkAddress modelAddress = new LinkAddress(address);
 
-        final LinkModule modelModule = !module.equals("") ? new LinkModule(module) : null;
+        final TagModule modelModule = !module.equals("") ? new TagModule(module) : null;
 
         if (modelModule == null) {
             return new Link(modelName, modelAddress);

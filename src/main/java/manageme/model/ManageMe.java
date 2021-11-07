@@ -47,14 +47,12 @@ public class ManageMe implements ReadOnlyManageMe {
         resetData(toBeCopied);
     }
 
-    //// list overwrite operations
-
     /**
      * Replaces the contents of the link list with {@code links}.
      * {@code links} must not contain duplicate links.
      */
     public void setLinks(List<Link> links) {
-        this.links.setLinks(links);
+        this.links.setTs(links);
     }
 
     /**
@@ -62,7 +60,7 @@ public class ManageMe implements ReadOnlyManageMe {
      * {@code modules} must not contain duplicate modules.
      */
     public void setModules(List<Module> modules) {
-        this.modules.setModules(modules);
+        this.modules.setTs(modules);
     }
 
     /**
@@ -70,7 +68,67 @@ public class ManageMe implements ReadOnlyManageMe {
      * {@code tasks} must not contain duplicate tasks.
      */
     public void setTasks(List<Task> tasks) {
-        this.tasks.setTasks(tasks);
+        this.tasks.setTs(tasks);
+    }
+
+    /**
+     * @param target the target object to be modified
+     * @param editedT the desired edited object
+     * @param <T> a generic variable that can be a Task, Module or Link.
+     */
+    public <T extends ManageMeObject> void setT(T target, T editedT) {
+        UniqueObjectList<T> toSet = getList(target);
+        toSet.setT(target, editedT);
+    }
+
+    /**
+     * @param toAdd an object to be added to the UniqueObjectList.
+     * @param <T> a generic variable that can be a Task, Module or Link.
+     */
+    public <T extends ManageMeObject> void add(T toAdd) {
+        UniqueObjectList<T> toSet = getList(toAdd);
+        toSet.add(toAdd);
+    }
+
+    /**
+     *
+     * @param target an object to be checked about whether it is contained in the UniqueObjectList.
+     * @param <T> a generic variable that can be a Task, Module or Link.
+     * @return true if the object is contained.
+     */
+    public <T extends ManageMeObject> boolean has(T target) {
+        UniqueObjectList<T> toSet = getList(target);
+        return toSet.contains(target);
+    }
+
+    /**
+     *
+     * @param target an object to be removed from the UniqueObjectList
+     * @param <T> a generic variable that can be a Task, Module or Link
+     */
+    public <T extends ManageMeObject> void remove(T target) {
+        UniqueObjectList<T> toSet = getList(target);
+        toSet.remove(target);
+        if (target instanceof Module) {
+            Module modTarget = (Module) target;
+            links.removeMod(modTarget);
+        }
+    }
+
+    /**
+     *
+     * @param object an object whose corresponding type of list is to be returned
+     * @param <T> a generic variable that can be a Task, Module or Link
+     * @return the object's corresponding type of list
+     */
+    public <T extends ManageMeObject> UniqueObjectList<T> getList(T object) {
+        if (object instanceof Task) {
+            return (UniqueObjectList<T>) tasks;
+        } else if (object instanceof Link) {
+            return (UniqueObjectList<T>) links;
+        } else {
+            return (UniqueObjectList<T>) modules;
+        }
     }
 
     /**
@@ -78,126 +136,15 @@ public class ManageMe implements ReadOnlyManageMe {
      */
     public void resetData(ReadOnlyManageMe newData) {
         requireNonNull(newData);
-
-        setLinks(newData.getLinkList());
-        setModules(newData.getModuleList());
-        setTasks(newData.getTaskList());
+        this.setLinks(newData.getLinkList());
+        this.setModules(newData.getModuleList());
+        this.setTasks(newData.getTaskList());
     }
 
     //// link-level operations
 
-    /**
-     * Returns true if a link with the same identity as {@code link} exists in the ManageMe.
-     */
-    public boolean hasLink(Link link) {
-        requireNonNull(link);
-        return links.contains(link);
-    }
-
-    /**
-     * Adds a link to the ManageMe.
-     * The link must not already exist in the ManageMe.
-     */
-    public void addLink(Link p) {
-        links.add(p);
-    }
-
-    /**
-     * Replaces the given link {@code target} in the list with {@code editedLink}.
-     * {@code target} must exist in the ManageMe.
-     * The link identity of {@code editedLink} must not be the same as another existing link in the ManageMe.
-     */
-    public void setLink(Link target, Link editedLink) {
-        requireNonNull(editedLink);
-
-        links.setLink(target, editedLink);
-    }
-
-    /**
-     * Removes {@code key} from this {@code ManageMe}.
-     * {@code key} must exist in the ManageMe.
-     */
-    public void removeLink(Link key) {
-        links.remove(key);
-    }
-
     public void openLink(Link key) {
         links.open(key);
-    }
-
-    //// module-level operations
-
-    /**
-     * Returns true if a module with the same identity as {@code module} exists in the ManageMe.
-     */
-    public boolean hasModule(Module module) {
-        requireNonNull(module);
-        return modules.contains(module);
-    }
-
-    /**
-     * Adds a module to the ManageMe.
-     * The module must not already exist in the ManageMe.
-     */
-    public void addModule(Module p) {
-        modules.add(p);
-    }
-
-    /**
-     * Replaces the given module {@code target} in the list with {@code editedModule}.
-     * {@code target} must exist in the ManageMe.
-     * The module identity of {@code editedModule} must not be the same as another existing module in the ManageMe.
-     */
-    public void setModule(Module target, Module editedModule) {
-        requireNonNull(editedModule);
-
-        modules.setModule(target, editedModule);
-    }
-
-    /**
-     * Removes {@code key} from this {@code ManageMe}.
-     * {@code key} must exist in the ManageMe.
-     */
-    public void removeModule(Module key) {
-        links.removeMod(key);
-        modules.remove(key);
-    }
-
-    //// task-level operations
-
-    /**
-     * Returns true if a task with the same identity as {@code task} exists in the ManageMe.
-     */
-    public boolean hasTask(Task task) {
-        requireNonNull(task);
-        return tasks.contains(task);
-    }
-
-    /**
-     * Adds a task to the ManageMe.
-     * The task must not already exist in the ManageMe.
-     */
-    public void addTask(Task p) {
-        tasks.add(p);
-    }
-
-    /**
-     * Replaces the given task {@code target} in the list with {@code editedTask}.
-     * {@code target} must exist in the ManageMe.
-     * The task identity of {@code editedTask} must not be the same as another existing task in the ManageMe.
-     */
-    public void setTask(Task target, Task editedTask) {
-        requireNonNull(editedTask);
-
-        tasks.setTask(target, editedTask);
-    }
-
-    /**
-     * Removes {@code key} from this {@code ManageMe}.
-     * {@code key} must exist in the ManageMe.
-     */
-    public void removeTask(Task key) {
-        tasks.remove(key);
     }
 
     //// util methods

@@ -19,22 +19,19 @@ public class JsonSerializableManageMeTest {
     private static final Path TEST_DATA_FOLDER =
             Paths.get("src", "test", "data", "JsonSerializableManageMeTest");
     private static final Path TYPICAL_MANAGE_ME_FILE = TEST_DATA_FOLDER.resolve("typicalManageMe.json");
-    private static final Path TEST_TASK_DATA_FOLDER =
-            Paths.get("src", "test", "data", "JsonSerializableManageMeTest", "Task");
-    private static final Path TYPICAL_TASKS_FILE = TEST_TASK_DATA_FOLDER.resolve("typicalTasksManageMe.json");
-    private static final Path INVALID_TASK_FILE = TEST_TASK_DATA_FOLDER.resolve("invalidTaskManageMe.json");
-    private static final Path DUPLICATE_TASK_FILE = TEST_TASK_DATA_FOLDER.resolve("duplicateTaskManageMe.json");
+    private static final Path TYPICAL_TASKS_FILE = TEST_DATA_FOLDER.resolve("typicalTasksManageMe.json");
+    private static final Path INVALID_TASK_FILE = TEST_DATA_FOLDER.resolve("invalidTaskManageMe.json");
+    private static final Path DUPLICATE_TASK_FILE = TEST_DATA_FOLDER.resolve("duplicateTaskManageMe.json");
     private static final Path INVALID_LINK_FILE = TEST_DATA_FOLDER.resolve("invalidLinkManageMe.json");
     private static final Path DUPLICATE_LINK_FILE = TEST_DATA_FOLDER.resolve("duplicateLinkManageMe.json");
     private static final Path DUPLICATE_MODULE_FILE = TEST_DATA_FOLDER.resolve("duplicateModuleManageMe.json");
-    //private static final Path DUPLICATE_TASK_FILE = TEST_DATA_FOLDER.resolve("duplicateTaskManageMe.json");
 
     @Test
     public void toModelType_typicalTasksFile_success() throws Exception {
         JsonSerializableManageMe dataFromFile = JsonUtil.readJsonFile(TYPICAL_TASKS_FILE,
                 JsonSerializableManageMe.class).get();
         ManageMe manageMeFromFile = dataFromFile.toModelType();
-        ManageMe typicalTasksManageMe = TypicalTasks.getTypicalAddressBook();
+        ManageMe typicalTasksManageMe = TypicalTasks.getTypicalManageMe();
         assertEquals(manageMeFromFile, typicalTasksManageMe);
     }
 

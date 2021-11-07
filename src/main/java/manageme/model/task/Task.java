@@ -6,21 +6,25 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 import manageme.commons.util.CollectionUtil;
+import manageme.model.ManageMeObject;
+import manageme.model.Name;
+import manageme.model.TagModule;
+import manageme.model.task.exceptions.DuplicateTaskException;
+import manageme.model.task.exceptions.TaskNotFoundException;
 
 /**
  * Represents a Task in the Task List.
  * Guarantees: details are present and not TaskTime.empty(), field values are validated, immutable.
  */
-public class Task {
+public class Task extends ManageMeObject {
     public static final String MESSAGE_START_WITHOUT_END =
             "A task with a start datetime MUST also have an end datetime";
 
-    private final TaskName name;
     private final TaskDescription description;
     private TaskIsDone isDone;
 
-    //Optional: TaskModule that the task may be linked to. Can only be linked to max 1 module.
-    private final TaskModule module;
+    //Optional: TagModule that the task may be linked to. Can only be linked to max 1 module.
+    private final TagModule module;
 
     //Optional: Task may have an end DateTime(Deadline) or both a start and end DateTime(Event).
     private final TaskTime start;
@@ -30,11 +34,11 @@ public class Task {
      * Task with a start and end date(Event). Includes module.
      * Every field must be present and not TaskTime.empty().
      */
-    public Task(TaskName name, TaskDescription description, TaskModule module, TaskTime start,
+    public Task(Name name, TaskDescription description, TagModule module, TaskTime start,
                 TaskTime end) {
-        CollectionUtil.requireAllNonNull(name, description, module, start, end);
+        super(name);
+        CollectionUtil.requireAllNonNull(description, module, start, end);
         //checkArgument(checkStartHasEnd(start, end), MESSAGE_START_WITHOUT_END);
-        this.name = name;
         this.description = description;
         this.isDone = new TaskIsDone(false);
         this.module = module;
@@ -46,11 +50,11 @@ public class Task {
      * Task with a start and end date(Event). Includes module.
      * Every field must be present and not TaskTime.empty().
      */
-    public Task(TaskName name, TaskDescription description, TaskIsDone isDone, TaskModule module, TaskTime start,
+    public Task(Name name, TaskDescription description, TaskIsDone isDone, TagModule module, TaskTime start,
                 TaskTime end) {
+        super(name);
         CollectionUtil.requireAllNonNull(name, description, module, start, end);
         //checkArgument(checkStartHasEnd(start, end), MESSAGE_START_WITHOUT_END);
-        this.name = name;
         this.description = description;
         this.isDone = isDone;
         this.module = module;
@@ -58,15 +62,11 @@ public class Task {
         this.end = end;
     }
 
-    public TaskName getName() {
-        return name;
-    }
-
     public TaskDescription getDescription() {
         return description;
     }
 
-    public TaskModule getTaskModule() {
+    public TagModule getTagModule() {
         return module;
     }
 
@@ -117,13 +117,26 @@ public class Task {
      * Returns true if both tasks have the same name.
      * This defines a weaker notion of equality between two tasks.
      */
-    public boolean isSameTask(Task otherTask) {
+    @Override
+    public boolean isSame(ManageMeObject otherTask) {
         if (otherTask == this) {
             return true;
         }
+        if (otherTask instanceof Task) {
+            return otherTask != null
+                    && otherTask.getName().equals(getName());
+        } else {
+            return false;
+        }
+    }
 
-        return otherTask != null
-                && otherTask.getName().equals(getName());
+    @Override
+    public void throwDuplicateException() throws RuntimeException {
+        throw new DuplicateTaskException();
+    }
+
+    public void throwNotFoundException() throws RuntimeException {
+        throw new TaskNotFoundException();
     }
 
     /**
@@ -144,7 +157,7 @@ public class Task {
         return otherTask.getName().equals(getName())
                 && otherTask.getDescription().equals(getDescription())
                 && otherTask.isDone().equals(isDone())
-                && otherTask.getTaskModule().equals(getTaskModule())
+                && otherTask.getTagModule().equals(getTagModule())
                 && otherTask.getStart().equals(getStart())
                 && otherTask.getEnd().equals(getEnd());
     }
@@ -152,7 +165,7 @@ public class Task {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, description, isDone, module, start, end);
+        return Objects.hash(getName(), description, isDone, module, start, end);
     }
 
     @Override
@@ -164,8 +177,8 @@ public class Task {
                 .append(getDescription())
                 .append("; Done: ")
                 .append(isDone())
-                .append("; TaskModule: ")
-                .append(getTaskModule())
+                .append("; TagModule: ")
+                .append(getTagModule())
                 .append("; Start: ")
                 .append(getStart())
                 .append("; End: ")

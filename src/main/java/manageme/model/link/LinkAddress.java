@@ -3,8 +3,10 @@ package manageme.model.link;
 import static java.util.Objects.requireNonNull;
 
 import java.awt.Desktop;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -18,13 +20,18 @@ import manageme.model.link.exceptions.LinkNotOpenException;
 public class LinkAddress {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "The link should be a valid url, beginning with https://, ftp:// or file:/";
+            "The link should be a valid uri, beginning with https://, ftp:// or file:// with at least one more "
+                    + "character."
+                    + "\nIt doesn't support any space in the link.\nFile name should start from the root directory "
+                    + "for it to be able to be properly opened.";
 
     /*
      * The address should be in a valid url format.
      */
-    public static final String VALIDATION_REGEX = "^(https://|http://|ftp://|file:/)"
-            + "[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
+    public static final String VALIDATION_REGEX = "(https?|ftp|file|http)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;()]*"
+            + "[-a-zA-Z0-9+&@#/%=~_|]";
+
+    public static final String TEST = "^/|(/[a-zA-Z0-9_-]+)+$";
 
     public final URI linkAddress;
     public final String value;
@@ -92,7 +99,12 @@ public class LinkAddress {
         if (os.contains("nix") || os.contains("nux")) {
             Runtime runtime = Runtime.getRuntime();
             try {
-                runtime.exec("xdg-open " + toOpen);
+                Process p = runtime.exec("xdg-open " + toOpen);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+                String error = reader.readLine();
+                if (error != null) {
+                    throw new FileNotOpenException(error);
+                }
             } catch (IOException e) {
                 throw new FileNotOpenException();
             }

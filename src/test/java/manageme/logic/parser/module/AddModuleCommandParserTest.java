@@ -13,7 +13,7 @@ import static manageme.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import org.junit.jupiter.api.Test;
 
 import manageme.logic.commands.module.AddModuleCommand;
-import manageme.model.module.ModuleName;
+import manageme.model.Name;
 
 public class AddModuleCommandParserTest {
 
@@ -21,7 +21,7 @@ public class AddModuleCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() {
-        ModuleName expectedModule = new ModuleName(VALID_MODNAME_B);
+        Name expectedModule = new Name(VALID_MODNAME_B);
 
         // whitespace only preamble
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + MODNAME_DESC_B, new AddModuleCommand(expectedModule));

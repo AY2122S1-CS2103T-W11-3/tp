@@ -50,7 +50,7 @@ public class ManageMeTest {
     }
 
     @Test
-    public void resetData_withValidReadOnlyAddressBook_replacesData() {
+    public void resetData_withValidReadOnlyManageMe_replacesData() {
         ManageMe newData = TypicalManageMe.getTypicalManageMe();
         manageMe.resetData(newData);
         assertEquals(newData, manageMe);
@@ -88,27 +88,27 @@ public class ManageMeTest {
     }
 
     @Test
-    public void hasLink_nullLink_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> manageMe.hasLink(null));
+    public void has_nullLink_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> manageMe.has(null));
     }
 
     @Test
-    public void hasLink_linkNotInAddressBook_returnsFalse() {
-        assertFalse(manageMe.hasLink(LINK_A));
+    public void has_linkNotInManageMe_returnsFalse() {
+        assertFalse(manageMe.has(LINK_A));
     }
 
     @Test
-    public void hasLink_linkInAddressBook_returnsTrue() {
-        manageMe.addLink(LINK_A);
-        assertTrue(manageMe.hasLink(LINK_A));
+    public void has_linkInManageMe_returnsTrue() {
+        manageMe.add(LINK_A);
+        assertTrue(manageMe.has(LINK_A));
     }
 
     @Test
-    public void hasLink_linkWithSameIdentityFieldsInAddressBook_returnsTrue() {
-        manageMe.addLink(LINK_A);
+    public void has_linkWithSameIdentityFieldsInManageMe_returnsTrue() {
+        manageMe.add(LINK_A);
         Link editedAlice = new LinkBuilder(LINK_B).withAddress(VALID_LINKADDRESS_A).withModule(VALID_LINKMODULE_B)
                 .build();
-        assertTrue(manageMe.hasLink(editedAlice));
+        assertTrue(manageMe.has(editedAlice));
     }
 
     @Test
@@ -117,26 +117,26 @@ public class ManageMeTest {
     }
 
     @Test
-    public void hasModule_nullModule_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> manageMe.hasModule(null));
+    public void has_nullModule_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> manageMe.has(null));
     }
 
     @Test
-    public void hasModule_moduleNotInAddressBook_returnsFalse() {
-        assertFalse(manageMe.hasModule(MODULE_A));
+    public void has_moduleNotInManageMe_returnsFalse() {
+        assertFalse(manageMe.has(MODULE_A));
     }
 
     @Test
-    public void hasModule_moduleInAddressBook_returnsTrue() {
-        manageMe.addModule(MODULE_A);
-        assertTrue(manageMe.hasModule(MODULE_A));
+    public void has_moduleInManageMe_returnsTrue() {
+        manageMe.add(MODULE_A);
+        assertTrue(manageMe.has(MODULE_A));
     }
 
     @Test
-    public void hasModule_moduleWithSameIdentityFieldsInAddressBook_returnsTrue() {
-        manageMe.addModule(MODULE_A);
+    public void has_moduleWithSameIdentityFieldsInManageMe_returnsTrue() {
+        manageMe.add(MODULE_A);
         Module editedModule = new ModuleBuilder(MODULE_A).build();
-        assertTrue(manageMe.hasModule(editedModule));
+        assertTrue(manageMe.has(editedModule));
     }
 
     @Test
@@ -145,27 +145,27 @@ public class ManageMeTest {
     }
 
     @Test
-    public void hasTask_nullTask_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> manageMe.hasTask(null));
+    public void has_nullTask_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> manageMe.has(null));
     }
 
     @Test
-    public void hasTask_taskNotInAddressBook_returnsFalse() {
-        assertFalse(manageMe.hasTask(TASK_A));
+    public void has_taskNotInManageMe_returnsFalse() {
+        assertFalse(manageMe.has(TASK_A));
     }
 
     @Test
-    public void hasTask_taskInAddressBook_returnsTrue() {
-        manageMe.addTask(TASK_A);
-        assertTrue(manageMe.hasTask(TASK_A));
+    public void has_taskInManageMe_returnsTrue() {
+        manageMe.add(TASK_A);
+        assertTrue(manageMe.has(TASK_A));
     }
 
     @Test
-    public void hasTask_taskWithSameIdentityFieldsInAddressBook_returnsTrue() {
-        manageMe.addTask(TASK_A);
+    public void has_taskWithSameIdentityFieldsInManageMe_returnsTrue() {
+        manageMe.add(TASK_A);
         Task editedTask = new TaskBuilder(TASK_A).withDescription(TaskCommandTestUtil.VALID_DESCRIPTION_A)
                 .withModule(TaskCommandTestUtil.VALID_MODULE_A).build();
-        assertTrue(manageMe.hasTask(editedTask));
+        assertTrue(manageMe.has(editedTask));
     }
 
     @Test
@@ -174,7 +174,7 @@ public class ManageMeTest {
     }
 
     /**
-     * A stub ReadOnlyAddressBook whose links list can violate interface constraints.
+     * A stub ReadOnlyManageMe whose links list can violate interface constraints.
      */
     private static class ManageMeLinkStub implements ReadOnlyManageMe {
         private final ObservableList<Link> links = FXCollections.observableArrayList();
@@ -211,7 +211,7 @@ public class ManageMeTest {
     }
 
     /**
-     * A stub ReadOnlyAddressBook whose Modules list can violate interface constraints.
+     * A stub ReadOnlyManageMe whose Modules list can violate interface constraints.
      */
     private static class ManageMeModuleStub implements ReadOnlyManageMe {
         private final ObservableList<Link> links = FXCollections.observableArrayList();
@@ -248,7 +248,7 @@ public class ManageMeTest {
     }
 
     /**
-     * A stub ReadOnlyAddressBook whose Tasks list can violate interface constraints.
+     * A stub ReadOnlyManageMe whose Tasks list can violate interface constraints.
      */
     private static class ManageMeTaskStub implements ReadOnlyManageMe {
         private final ObservableList<Link> links = FXCollections.observableArrayList();

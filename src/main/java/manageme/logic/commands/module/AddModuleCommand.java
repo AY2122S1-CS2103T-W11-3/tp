@@ -7,8 +7,8 @@ import manageme.logic.commands.Command;
 import manageme.logic.commands.CommandResult;
 import manageme.logic.commands.exceptions.CommandException;
 import manageme.model.Model;
+import manageme.model.Name;
 import manageme.model.module.Module;
-import manageme.model.module.ModuleName;
 
 public class AddModuleCommand extends Command {
     public static final String COMMAND_WORD = "addMod";
@@ -22,28 +22,28 @@ public class AddModuleCommand extends Command {
     public static final String MESSAGE_SUCCESS = "New module added: %1$s";
     public static final String MESSAGE_DUPLICATE_MODULE = "This module already exists in the app.";
 
-    private final ModuleName moduleName;
+    private final Name name;
 
     /**
      * Creates an AddModuleCommand to add the specified {@code Module}
      */
-    public AddModuleCommand(ModuleName moduleName) {
-        requireNonNull(moduleName);
-        this.moduleName = moduleName;
+    public AddModuleCommand(Name name) {
+        requireNonNull(name);
+        this.name = name;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        Module toAdd = new Module(moduleName);
+        Module toAdd = new Module(name);
 
 
-        if (model.hasModule(toAdd)) {
+        if (model.has(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_MODULE);
         }
 
-        model.addModule(toAdd);
+        model.add(toAdd);
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
     }
 
@@ -51,6 +51,6 @@ public class AddModuleCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddModuleCommand // instanceof handles nulls
-                && moduleName.equals(((AddModuleCommand) other).moduleName));
+                && name.equals(((AddModuleCommand) other).name));
     }
 }

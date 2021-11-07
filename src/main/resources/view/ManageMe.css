@@ -4,7 +4,7 @@
     -panel-color: mistyrose;
     -calendar-color: floralwhite;
     -cardPane-color: navajowhite;
-    -hasTask-color: mediumspringgreen;
+    -has-color: mediumspringgreen;
     -readDay-color: cornsilk;
 }
 
@@ -105,15 +105,15 @@
     -fx-background-color: lightsalmon;
 }
 
-#hasTask {
+#has {
     -fx-fill: -calendar-color;
     -fx-stroke: -calendar-color;
     -fx-smooth: true;
 }
 
-#hasTask:hasTask {
-    -fx-fill: -hasTask-color;
-    -fx-stroke: -hasTask-color;
+#has:has {
+    -fx-fill: -has-color;
+    -fx-stroke: -has-color;
 }
 
 #dayCardPane:selected {
@@ -122,14 +122,14 @@
     -fx-text-fill: #ffffff;
 }
 
-#dayCardPane:selected #hasTask {
+#dayCardPane:selected #has {
     -fx-fill: transparent;
     -fx-stroke: transparent;
 }
 
-#dayCardPane:selected #hasTask:hasTask {
-    -fx-fill: -hasTask-color;
-    -fx-stroke: -hasTask-color;
+#dayCardPane:selected #has:has {
+    -fx-fill: -has-color;
+    -fx-stroke: -has-color;
 }
 
 .scroll-bar .thumb {
@@ -161,16 +161,16 @@
 }
 
 #moduleId,
-#moduleName,
+#Name,
 #linkId,
-#linkName,
+#Name,
 #taskId,
-#taskName,
+#Name,
 #readDayTitle {
     -fx-font-size: 18px;
 }
 
-#taskModule,
+#TagModule,
 #startTime,
 #endTime {
     -fx-font-size: 13px;
@@ -188,8 +188,8 @@
 }
 
 .button:hover {
-    -fx-border-color: darkviolet;
-    -fx-background-color: dodgerblue;
+    -fx-border-color: gray;
+    -fx-background-color: khaki;
 }
 
 .header {

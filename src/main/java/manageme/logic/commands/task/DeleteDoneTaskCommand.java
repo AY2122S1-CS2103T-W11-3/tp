@@ -33,7 +33,7 @@ public class DeleteDoneTaskCommand extends Command {
         for (int i = lastShownList.size() - 1; i >= 0; i--) {
             Task taskToDelete = lastShownList.get(i);
             if (taskToDelete.isDone().value) {
-                model.deleteTask(taskToDelete);
+                model.delete(taskToDelete);
             }
         }
 

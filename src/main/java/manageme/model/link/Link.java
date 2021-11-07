@@ -3,60 +3,66 @@ package manageme.model.link;
 import java.util.Objects;
 
 import manageme.commons.util.CollectionUtil;
+import manageme.model.ManageMeObject;
+import manageme.model.Name;
+import manageme.model.TagModule;
+import manageme.model.link.exceptions.DuplicateLinkException;
+import manageme.model.link.exceptions.LinkNotFoundException;
 
 /**
  * Represents a link in the app.
  * Guarantees: field values are validated, immutable
  */
-public class Link {
-    private final LinkName name;
+public class Link extends ManageMeObject {
+
     private final LinkAddress address;
-    private final LinkModule module;
+    private final TagModule module;
 
     /**
      * Basic Link with only name and address.
      */
-    public Link(LinkName name, LinkAddress address) {
-        CollectionUtil.requireAllNonNull(name, address);
-        this.name = name;
+    public Link(Name name, LinkAddress address) {
+        super(name);
+        CollectionUtil.requireAllNonNull(address);
         this.address = address;
-        this.module = LinkModule.empty();
+        this.module = TagModule.empty();
     }
 
     /**
      * Basic Link associated with a module.
      */
-    public Link(LinkName name, LinkAddress address, LinkModule module) {
-        CollectionUtil.requireAllNonNull(name, address);
-        this.name = name;
+    public Link(Name name, LinkAddress address, TagModule module) {
+        super(name);
+        CollectionUtil.requireAllNonNull(address, module);
         this.address = address;
         this.module = module;
-    }
-
-    public LinkName getName() {
-        return name;
     }
 
     public LinkAddress getAddress() {
         return address;
     }
 
-    public LinkModule getLinkModule() {
+    public TagModule getLinkModule() {
         return module;
     }
 
     /**
      * Returns true if both links have the same link address.
      * This defines a weaker notion of equality between two links.
-     * @param otherLink
+     * @param other
      */
-    public boolean isSameLink(Link otherLink) {
-        if (otherLink == this) {
+    @Override
+    public boolean isSame(ManageMeObject other) {
+        if (other == this) {
             return true;
         }
-
-        return otherLink != null
-                && otherLink.getAddress().equals(getAddress());
+        if (other instanceof Link) {
+            Link otherLink = (Link) other;
+            return otherLink != null
+                    && otherLink.getAddress().equals(getAddress());
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -64,6 +70,16 @@ public class Link {
      */
     public void open() {
         address.open();
+    }
+
+    @Override
+    public void throwDuplicateException() throws RuntimeException {
+        throw new DuplicateLinkException();
+    }
+
+    @Override
+    public void throwNotFoundException() throws RuntimeException {
+        throw new LinkNotFoundException();
     }
 
     /**
@@ -89,7 +105,7 @@ public class Link {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, address, module);
+        return Objects.hash(super.getName(), address, module);
     }
 
     @Override
@@ -98,7 +114,7 @@ public class Link {
         builder.append(getName())
                 .append("; Address: ")
                 .append(getAddress())
-                .append("; LinkModule: ")
+                .append("; TagModule: ")
                 .append(getLinkModule());
         return builder.toString();
     }

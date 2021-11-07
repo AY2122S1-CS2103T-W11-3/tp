@@ -14,15 +14,15 @@ public class TypicalManageMe {
     public static ManageMe getTypicalManageMe() {
         ManageMe ab = new ManageMe();
         for (Link link : TypicalLinks.getTypicalLinks()) {
-            ab.addLink(link);
+            ab.add(link);
         }
 
         for (Module module : TypicalModules.getTypicalModules()) {
-            ab.addModule(module);
+            ab.add(module);
         }
 
         for (Task task : getTypicalTasks()) {
-            ab.addTask(task);
+            ab.add(task);
         }
         return ab;
     }

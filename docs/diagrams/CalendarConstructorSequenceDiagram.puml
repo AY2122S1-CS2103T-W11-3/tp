@@ -1,0 +1,60 @@
+@startuml
+!include style.puml
+
+box Ui UI_COLOR_T1
+participant ":MmMainWindow" as MainWindow UI_COLOR
+participant ":CalendarPanel" as CalendarPanel UI_COLOR
+participant ":DayCard" as DayCard UI_COLOR
+end box
+
+[-> MainWindow : fillInnerParts()
+activate MainWindow
+MainWindow -> CalendarPanel : new CalendarPanel(logic.getUnfilteredTaskList())
+activate CalendarPanel UI_COLOR_T4
+
+CalendarPanel -> CalendarPanel : fillCalendarPanel(LocalDate.now())
+activate CalendarPanel UI_COLOR_T3
+
+CalendarPanel -> CalendarPanel : fillCalendar()
+activate CalendarPanel UI_COLOR_T2
+
+CalendarPanel -> CalendarPanel : clearCalendar()
+activate CalendarPanel
+CalendarPanel --> CalendarPanel
+deactivate CalendarPanel
+
+CalendarPanel -> CalendarPanel : fillLayout()
+activate CalendarPanel
+CalendarPanel --> CalendarPanel
+deactivate CalendarPanel
+
+CalendarPanel -> CalendarPanel : fillDay()
+activate CalendarPanel
+
+loop numOfDayInMonth
+create DayCard
+CalendarPanel -> DayCard : new DayCard()
+activate DayCard
+DayCard --> CalendarPanel
+deactivate DayCard
+end
+CalendarPanel --> CalendarPanel
+deactivate CalendarPanel
+
+CalendarPanel --> CalendarPanel
+deactivate CalendarPanel
+
+CalendarPanel -> CalendarPanel : fillReadDayPanel()
+activate CalendarPanel UI_COLOR_T2
+CalendarPanel --> CalendarPanel
+deactivate CalendarPanel
+
+CalendarPanel --> CalendarPanel
+deactivate CalendarPanel
+
+MainWindow<-- CalendarPanel
+deactivate CalendarPanel
+
+[<-- MainWindow
+deactivate MainWindow
+@enduml

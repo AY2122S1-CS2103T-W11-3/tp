@@ -22,7 +22,7 @@ public class LinkCard extends UiPart<Region> {
      * As a consequence, UI elements' variable names cannot be set to such keywords
      * or an exception will be thrown by JavaFX during runtime.
      *
-     * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
+     * @see <a href="https://github.com/se-edu/ManageMe-level4/issues/336">The issue on ManageMe level 4</a>
      */
 
     public final Link link;
@@ -30,7 +30,7 @@ public class LinkCard extends UiPart<Region> {
     @FXML
     private VBox linkCardPane;
     @FXML
-    private Label linkName;
+    private Label name;
     @FXML
     private Label linkId;
     @FXML
@@ -47,7 +47,7 @@ public class LinkCard extends UiPart<Region> {
         super(FXML);
         this.link = link;
         linkId.setText(displayedIndex + ". ");
-        linkName.setText(link.getName().value);
+        name.setText(link.getName().value);
         linkAddress.setText(link.getAddress().value);
         linkModule.setText(link.getLinkModule().value);
     }

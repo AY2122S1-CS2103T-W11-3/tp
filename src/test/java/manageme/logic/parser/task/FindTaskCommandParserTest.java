@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import manageme.logic.commands.task.FindTaskCommand;
 import manageme.logic.parser.CommandParserTestUtil;
-import manageme.model.task.TaskNameContainsKeywordsPredicate;
+import manageme.model.NameContainsKeywordsPredicate;
 
 public class FindTaskCommandParserTest {
 
@@ -24,7 +24,7 @@ public class FindTaskCommandParserTest {
     public void parse_validArgs_returnsFindCommand() {
         // no leading and trailing whitespaces
         FindTaskCommand expectedFindTaskCommand =
-                new FindTaskCommand(new TaskNameContainsKeywordsPredicate(Arrays.asList("Eat", "Sleep")));
+                new FindTaskCommand(new NameContainsKeywordsPredicate(Arrays.asList("Eat", "Sleep")));
         CommandParserTestUtil.assertParseSuccess(parser, "Eat Sleep", expectedFindTaskCommand);
 
         // multiple whitespaces between keywords

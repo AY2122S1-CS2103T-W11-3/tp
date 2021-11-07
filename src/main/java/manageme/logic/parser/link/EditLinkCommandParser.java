@@ -40,7 +40,7 @@ public class EditLinkCommandParser implements Parser<EditLinkCommand> {
 
         EditLinkCommand.EditLinkDescriptor editLinkDescriptor = new EditLinkCommand.EditLinkDescriptor();
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            editLinkDescriptor.setName(ParserUtil.parseLinkName(argMultimap.getValue(PREFIX_NAME).get()));
+            editLinkDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
         }
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
             editLinkDescriptor.setAddress(ParserUtil.parseLinkAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));

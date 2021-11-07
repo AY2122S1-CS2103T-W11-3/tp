@@ -1,10 +1,9 @@
 package manageme.testutil;
 
 import manageme.logic.commands.task.EditTaskCommand;
+import manageme.model.Name;
 import manageme.model.task.Task;
 import manageme.model.task.TaskDescription;
-import manageme.model.task.TaskModule;
-import manageme.model.task.TaskName;
 import manageme.model.task.TaskTime;
 
 /**
@@ -32,17 +31,17 @@ public class EditTaskDescriptorBuilder {
         descriptor = new EditTaskCommand.EditTaskDescriptor();
         descriptor.setName(task.getName());
         descriptor.setDescription(task.getDescription());
-        descriptor.setModule(task.getTaskModule());
+        descriptor.setModule(task.getTagModule());
         descriptor.setStart(task.getStart());
         descriptor.setEnd(task.getEnd());
     }
 
 
     /**
-     * Sets the {@code TaskName} of the {@code EditTaskDescriptor} that we are building.
+     * Sets the {@code Name} of the {@code EditTaskDescriptor} that we are building.
      */
     public EditTaskDescriptorBuilder withName(String name) {
-        descriptor.setName(new TaskName(name));
+        descriptor.setName(new Name(name));
         return this;
     }
 
@@ -55,10 +54,10 @@ public class EditTaskDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code TaskModule} of the {@code EditTaskDescriptor} that we are building.
+     * Sets the {@code TagModule} of the {@code EditTaskDescriptor} that we are building.
      */
     public EditTaskDescriptorBuilder withModule(String module) {
-        descriptor.setModule(new TaskModule(module));
+        descriptor.setModule(new manageme.model.TagModule(module));
         return this;
     }
 

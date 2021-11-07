@@ -42,7 +42,7 @@ public class DeleteLinkCommand extends Command {
         }
 
         Link linkToDelete = lastShownList.get(targetIndex.getZeroBased());
-        model.deleteLink(linkToDelete);
+        model.delete(linkToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_LINK_SUCCESS, linkToDelete));
     }
 

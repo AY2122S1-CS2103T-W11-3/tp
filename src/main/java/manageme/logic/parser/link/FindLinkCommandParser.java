@@ -6,7 +6,7 @@ import manageme.commons.core.Messages;
 import manageme.logic.commands.link.FindLinkCommand;
 import manageme.logic.parser.Parser;
 import manageme.logic.parser.exceptions.ParseException;
-import manageme.model.link.LinkNameContainsKeywordsPredicate;
+import manageme.model.NameContainsKeywordsPredicate;
 
 public class FindLinkCommandParser implements Parser<FindLinkCommand> {
     /**
@@ -23,7 +23,7 @@ public class FindLinkCommandParser implements Parser<FindLinkCommand> {
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
 
-        return new FindLinkCommand(new LinkNameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+        return new FindLinkCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
     }
 
 }

@@ -16,8 +16,8 @@ import org.junit.jupiter.api.Test;
 
 import manageme.model.Model;
 import manageme.model.ModelManager;
+import manageme.model.NameContainsKeywordsPredicate;
 import manageme.model.UserPrefs;
-import manageme.model.module.ModNameContainsKeywordsPredicate;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindModuleCommand}.
@@ -28,10 +28,10 @@ public class FindModuleCommandTest {
 
     @Test
     public void equals() {
-        ModNameContainsKeywordsPredicate firstPredicate =
-                new ModNameContainsKeywordsPredicate(Collections.singletonList("first"));
-        ModNameContainsKeywordsPredicate secondPredicate =
-                new ModNameContainsKeywordsPredicate(Collections.singletonList("second"));
+        NameContainsKeywordsPredicate firstPredicate =
+                new NameContainsKeywordsPredicate(Collections.singletonList("first"));
+        NameContainsKeywordsPredicate secondPredicate =
+                new NameContainsKeywordsPredicate(Collections.singletonList("second"));
 
         FindModuleCommand findFirstCommand = new FindModuleCommand(firstPredicate);
         FindModuleCommand findSecondCommand = new FindModuleCommand(secondPredicate);
@@ -56,7 +56,7 @@ public class FindModuleCommandTest {
     @Test
     public void execute_zeroKeywords_noModuleFound() {
         String expectedMessage = String.format(MESSAGE_MODULES_LISTED_OVERVIEW, 0);
-        ModNameContainsKeywordsPredicate predicate = preparePredicate(" ");
+        NameContainsKeywordsPredicate predicate = preparePredicate(" ");
         FindModuleCommand command = new FindModuleCommand(predicate);
         expectedModel.updateFilteredModuleList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
@@ -66,7 +66,7 @@ public class FindModuleCommandTest {
     @Test
     public void execute_multipleKeywords_multipleModulesFound() {
         String expectedMessage = String.format(MESSAGE_MODULES_LISTED_OVERVIEW, 2);
-        ModNameContainsKeywordsPredicate predicate = preparePredicate("CS2100 CS2103");
+        NameContainsKeywordsPredicate predicate = preparePredicate("CS2100 CS2103");
         FindModuleCommand command = new FindModuleCommand(predicate);
         expectedModel.updateFilteredModuleList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
@@ -74,9 +74,9 @@ public class FindModuleCommandTest {
     }
 
     /**
-     * Parses {@code userInput} into a {@code ModNameContainsKeywordsPredicate}.
+     * Parses {@code userInput} into a {@code NameContainsKeywordsPredicate}.
      */
-    private ModNameContainsKeywordsPredicate preparePredicate(String userInput) {
-        return new ModNameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+")));
+    private NameContainsKeywordsPredicate preparePredicate(String userInput) {
+        return new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+")));
     }
 }

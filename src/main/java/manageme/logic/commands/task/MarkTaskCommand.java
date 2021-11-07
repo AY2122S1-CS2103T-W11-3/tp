@@ -42,8 +42,8 @@ public class MarkTaskCommand extends Command {
         Task taskToMark = lastShownList.get(targetIndex.getZeroBased());
         TaskIsDone newIsDone = new TaskIsDone(!taskToMark.isDone().value);
         Task markedTask = new Task(taskToMark.getName(), taskToMark.getDescription(), newIsDone,
-                taskToMark.getTaskModule(), taskToMark.getStart(), taskToMark.getEnd());
-        model.setTask(taskToMark, markedTask);
+                taskToMark.getTagModule(), taskToMark.getStart(), taskToMark.getEnd());
+        model.set(taskToMark, markedTask);
         model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         return new CommandResult(String.format(MESSAGE_MARKED_TASK_SUCCESS, markedTask));
     }
