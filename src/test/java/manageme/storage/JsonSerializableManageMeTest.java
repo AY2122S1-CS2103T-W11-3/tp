@@ -52,7 +52,7 @@ public class JsonSerializableManageMeTest {
     }
 
     @Test
-    public void toModelType_invalidLinkFile_throwsIllegalValueException() throws Exception {
+    public void toModelType_invalidPersonFile_throwsIllegalValueException() throws Exception {
         JsonSerializableManageMe dataFromFile = JsonUtil.readJsonFile(INVALID_LINK_FILE,
                 JsonSerializableManageMe.class).orElse(null);
         Assert.assertThrows(IllegalValueException.class, dataFromFile::toModelType);

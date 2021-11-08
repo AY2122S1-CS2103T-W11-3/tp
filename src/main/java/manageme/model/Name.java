@@ -9,7 +9,7 @@ public class Name {
             "Names should only contain alphanumeric characters and spaces, and it should not be blank";
 
     /*
-     * The first character of the name must not be a whitespace,
+     * The first character of the module name must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
@@ -19,7 +19,7 @@ public class Name {
     /**
      * Constructs a {@code Name}.
      *
-     * @param name A valid name.
+     * @param name A valid mod name.
      */
     public Name(String name) {
         requireNonNull(name);
@@ -28,7 +28,7 @@ public class Name {
     }
 
     /**
-     * Returns true if a given string is a valid name.
+     * Returns true if a given string is a valid module name.
      */
     public static boolean isValidName(String test) {
         return test.matches(VALIDATION_REGEX);

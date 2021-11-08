@@ -3,7 +3,7 @@ package manageme.logic.parser.task;
 import static manageme.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static manageme.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static manageme.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static manageme.testutil.TypicalIndexes.INDEX_FIRST;
+import static manageme.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +22,7 @@ public class DeleteTaskCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsDeleteTaskCommand() {
-        assertParseSuccess(parser, "1", new DeleteTaskCommand(INDEX_FIRST));
+        assertParseSuccess(parser, "1", new DeleteTaskCommand(INDEX_FIRST_PERSON));
     }
 
     @Test

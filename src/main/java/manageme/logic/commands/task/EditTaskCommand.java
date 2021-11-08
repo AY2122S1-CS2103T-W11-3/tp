@@ -218,6 +218,23 @@ public class EditTaskCommand extends Command {
             return Optional.ofNullable(end);
         }
 
+        ///**
+        // * Sets {@code tags} to this object's {@code tags}.
+        // * A defensive copy of {@code tags} is used internally.
+        // */
+        //public void setTags(Set<Tag> tags) {
+        //    this.tags = (tags != null) ? new HashSet<>(tags) : null;
+        //}
+
+        ///**
+        // * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
+        // * if modification is attempted.
+        // * Returns {@code Optional#empty()} if {@code tags} is null.
+        // */
+        //public Optional<Set<Tag>> getTags() {
+        //    return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        //}
+
         @Override
         public boolean equals(Object other) {
             // short circuit if same object
@@ -238,6 +255,7 @@ public class EditTaskCommand extends Command {
                     && getModule().equals(e.getModule())
                     && getStart().equals(e.getStart())
                     && getEnd().equals(e.getEnd());
+            //        && getTags().equals(e.getTags());
         }
     }
 }
